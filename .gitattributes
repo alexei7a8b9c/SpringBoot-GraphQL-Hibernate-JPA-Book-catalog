@@ -1,2 +1,108 @@
-/mvnw text eol=lf
-*.cmd text eol=crlf
+# ====================
+# Языки программирования
+# ====================
+
+# Java файлы - основной язык проекта
+*.java linguist-language=Java
+
+# JavaScript файлы - фронтенд
+*.js linguist-language=JavaScript
+
+# ====================
+# HTML/CSS как шаблоны
+# ====================
+
+# HTML файлы - шаблоны (относить как "vendored")
+*.html linguist-vendored
+*.htm linguist-vendored
+
+# CSS файлы - статические стили (относить как "vendored")
+*.css linguist-vendored
+
+# ====================
+# Остальные файлы
+# ====================
+
+# Графические файлы
+*.png linguist-vendored
+*.jpg linguist-vendored
+*.jpeg linguist-vendored
+*.gif linguist-vendored
+*.svg linguist-vendored
+*.ico linguist-vendored
+
+# Конфигурационные файлы
+*.yml linguist-vendored
+*.yaml linguist-vendored
+*.properties linguist-vendored
+*.xml linguist-vendored
+*.json linguist-vendored
+*.sql linguist-vendored
+*.graphql linguist-vendored
+*.graphqls linguist-vendored
+
+# Документация
+*.md linguist-documentation
+*.txt linguist-documentation
+README linguist-documentation
+LICENSE linguist-documentation
+
+# ====================
+# Исключение директорий
+# ====================
+
+# Игнорировать сгенерированные файлы и бинарники
+target/ linguist-vendored
+build/ linguist-vendored
+dist/ linguist-vendored
+out/ linguist-vendored
+bin/ linguist-vendored
+*.class linguist-vendored
+*.jar linguist-vendored
+*.war linguist-vendored
+*.ear linguist-vendored
+
+# Игнорировать системные и IDE файлы
+.DS_Store linguist-vendored
+.idea/ linguist-vendored
+*.iml linguist-vendored
+.vscode/ linguist-vendored
+.settings/ linguist-vendored
+.project linguist-vendored
+.classpath linguist-vendored
+
+# ====================
+# Явное указание для templates
+# ====================
+
+# Все файлы в templates игнорировать для статистики языков
+templates/** linguist-vendored
+
+# ====================
+# Явное указание для static ресурсов
+# ====================
+
+# Все файлы в static тоже игнорировать
+static/** linguist-vendored
+
+# ====================
+# Переопределение для важных папок
+# ====================
+
+# Главный Java код должен учитываться
+src/main/java/** linguist-language=Java
+
+# Тесты тоже должны учитываться как Java
+src/test/java/** linguist-language=Java
+
+# ====================
+# Гарантия правильного подсчета
+# ====================
+
+# Явно указать, что нужно обнаруживать
+*.java linguist-detectable
+*.js linguist-detectable
+
+# Явно указать, что не нужно обнаруживать
+*.html linguist-detectable=false
+*.css linguist-detectable=false
