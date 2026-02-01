@@ -1,29 +1,25 @@
 # ====================
-# Языки программирования
+# PRIMARY LANGUAGE
 # ====================
 
-# Java файлы - основной язык проекта
+# Java files - main project language
 *.java linguist-language=Java
 
-# JavaScript файлы - фронтенд
-*.js linguist-language=JavaScript
-
 # ====================
-# HTML/CSS как шаблоны
+# VENDORED/GENERATED FILES
 # ====================
 
-# HTML файлы - шаблоны (относить как "vendored")
+# JavaScript files - frontend (exclude from language stats)
+*.js linguist-vendored
+
+# HTML files - templates (exclude from language stats)
 *.html linguist-vendored
 *.htm linguist-vendored
 
-# CSS файлы - статические стили (относить как "vendored")
+# CSS files - static styles (exclude from language stats)
 *.css linguist-vendored
 
-# ====================
-# Остальные файлы
-# ====================
-
-# Графические файлы
+# Image files
 *.png linguist-vendored
 *.jpg linguist-vendored
 *.jpeg linguist-vendored
@@ -31,7 +27,7 @@
 *.svg linguist-vendored
 *.ico linguist-vendored
 
-# Конфигурационные файлы
+# Configuration files
 *.yml linguist-vendored
 *.yaml linguist-vendored
 *.properties linguist-vendored
@@ -41,17 +37,17 @@
 *.graphql linguist-vendored
 *.graphqls linguist-vendored
 
-# Документация
+# Documentation
 *.md linguist-documentation
 *.txt linguist-documentation
 README linguist-documentation
 LICENSE linguist-documentation
 
 # ====================
-# Исключение директорий
+# EXCLUDE DIRECTORIES
 # ====================
 
-# Игнорировать сгенерированные файлы и бинарники
+# Generated files and binaries
 target/ linguist-vendored
 build/ linguist-vendored
 dist/ linguist-vendored
@@ -62,7 +58,7 @@ bin/ linguist-vendored
 *.war linguist-vendored
 *.ear linguist-vendored
 
-# Игнорировать системные и IDE файлы
+# System and IDE files
 .DS_Store linguist-vendored
 .idea/ linguist-vendored
 *.iml linguist-vendored
@@ -72,37 +68,33 @@ bin/ linguist-vendored
 .classpath linguist-vendored
 
 # ====================
-# Явное указание для templates
+# EXPLICIT DIRECTORY OVERRIDES
 # ====================
 
-# Все файлы в templates игнорировать для статистики языков
+# All files in templates are vendored
 templates/** linguist-vendored
 
-# ====================
-# Явное указание для static ресурсов
-# ====================
-
-# Все файлы в static тоже игнорировать
+# All files in static are vendored
 static/** linguist-vendored
 
 # ====================
-# Переопределение для важных папок
+# ENSURE JAVA COUNTING
 # ====================
 
-# Главный Java код должен учитываться
+# Main Java source code
 src/main/java/** linguist-language=Java
 
-# Тесты тоже должны учитываться как Java
+# Test Java source code
 src/test/java/** linguist-language=Java
 
 # ====================
-# Гарантия правильного подсчета
+# LANGUAGE DETECTION CONTROL
 # ====================
 
-# Явно указать, что нужно обнаруживать
+# Ensure Java is detectable
 *.java linguist-detectable
-*.js linguist-detectable
 
-# Явно указать, что не нужно обнаруживать
+# Prevent detection for other file types
 *.html linguist-detectable=false
 *.css linguist-detectable=false
+*.js linguist-detectable=false
