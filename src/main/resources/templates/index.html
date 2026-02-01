@@ -3,139 +3,224 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book Management System - GraphQL + PostgreSQL</title>
+    <title>Book Manager | Simple & Clean</title>
     <link rel="stylesheet" href="/static/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-<div class="container">
+<div class="app-wrapper">
     <!-- Header -->
-    <header class="header">
-        <h1><i class="fas fa-book"></i> Book Management System</h1>
-        <p>GraphQL + PostgreSQL + Spring Boot 3.x</p>
-        <div class="stats">
-            <div class="stat-card">
-                <i class="fas fa-book-open"></i>
-                <span id="totalBooks">Loading...</span>
-                <p>Total Books</p>
+    <header class="app-header">
+        <div class="header-content">
+            <div class="logo">
+                <i class="fas fa-book"></i>
+                <h1>Book Manager</h1>
             </div>
-            <div class="stat-card">
-                <i class="fas fa-user-pen"></i>
-                <span id="uniqueAuthors">Loading...</span>
-                <p>Unique Authors</p>
-            </div>
-            <div class="stat-card">
-                <i class="fas fa-building"></i>
-                <span id="uniquePublishers">Loading...</span>
-                <p>Publishers</p>
+            <div class="header-info">
+                <div class="info-item">
+                    <i class="fas fa-database"></i>
+                    <span id="totalBooks">0 books</span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-user-pen"></i>
+                    <span id="uniqueAuthors">0 authors</span>
+                </div>
             </div>
         </div>
     </header>
 
     <!-- Main Content -->
-    <main class="main-content">
-        <!-- Left Panel: Book Form -->
-        <div class="left-panel">
-            <div class="form-section">
-                <h2><i class="fas fa-edit"></i> Book Form</h2>
-                <form id="bookForm">
-                    <input type="hidden" id="bookId">
+    <main class="app-main">
+        <!-- Left Section: Book Form -->
+        <section class="form-section">
+            <div class="section-header">
+                <h2><i class="fas fa-pen"></i> Book Details</h2>
+                <div class="form-mode" id="formMode">
+                    <span class="mode-badge">New Book</span>
+                </div>
+            </div>
 
-                    <div class="form-group">
-                        <label for="title"><i class="fas fa-heading"></i> Title *</label>
-                        <input type="text" id="title" required placeholder="Enter book title">
-                        <div class="error" id="titleError"></div>
-                    </div>
+            <form id="bookForm" class="book-form">
+                <input type="hidden" id="bookId">
 
-                    <div class="form-group">
-                        <label for="author"><i class="fas fa-user"></i> Author *</label>
-                        <input type="text" id="author" required placeholder="Enter author name">
-                        <div class="error" id="authorError"></div>
-                    </div>
+                <div class="form-group">
+                    <label for="title">
+                        <i class="fas fa-heading"></i>
+                        Book Title *
+                    </label>
+                    <input type="text"
+                           id="title"
+                           name="title"
+                           required
+                           placeholder="Enter book title">
+                    <div class="form-hint">Required field</div>
+                    <div class="error" id="titleError"></div>
+                </div>
 
-                    <div class="form-group">
-                        <label for="publisher"><i class="fas fa-building"></i> Publisher</label>
-                        <input type="text" id="publisher" placeholder="Enter publisher name">
-                        <div class="error" id="publisherError"></div>
-                    </div>
+                <div class="form-group">
+                    <label for="author">
+                        <i class="fas fa-user"></i>
+                        Author *
+                    </label>
+                    <input type="text"
+                           id="author"
+                           name="author"
+                           required
+                           placeholder="Enter author name">
+                    <div class="form-hint">Required field</div>
+                    <div class="error" id="authorError"></div>
+                </div>
 
-                    <div class="form-buttons">
+                <div class="form-group">
+                    <label for="publisher">
+                        <i class="fas fa-building"></i>
+                        Publisher
+                    </label>
+                    <input type="text"
+                           id="publisher"
+                           name="publisher"
+                           placeholder="Enter publisher name (optional)">
+                    <div class="form-hint">Optional field</div>
+                    <div class="error" id="publisherError"></div>
+                </div>
+
+                <div class="form-actions">
+                    <div class="action-buttons">
                         <button type="submit" class="btn btn-primary" id="saveBtn">
-                            <i class="fas fa-save"></i> Save Book
+                            <i class="fas fa-save"></i>
+                            Save Book
                         </button>
                         <button type="button" class="btn btn-secondary" id="clearBtn">
-                            <i class="fas fa-broom"></i> Clear Form
+                            <i class="fas fa-eraser"></i>
+                            Clear
                         </button>
-                        <button type="button" class="btn btn-danger" id="cancelBtn" style="display: none;">
-                            <i class="fas fa-times"></i> Cancel Edit
+                        <button type="button" class="btn btn-outline" id="cancelBtn" style="display: none;">
+                            <i class="fas fa-times"></i>
+                            Cancel
                         </button>
                     </div>
-                </form>
-            </div>
-
-            <!-- Search Section -->
-            <div class="search-section">
-                <h2><i class="fas fa-search"></i> Search Books</h2>
-                <div class="search-controls">
-                    <input type="text" id="searchInput" placeholder="Search by title...">
-                    <button class="btn btn-secondary" onclick="searchBooks()">
-                        <i class="fas fa-search"></i> Search
-                    </button>
-                    <button class="btn btn-secondary" onclick="showAllBooks()">
-                        <i class="fas fa-list"></i> Show All
-                    </button>
                 </div>
-                <div class="filters">
-                    <input type="text" id="authorFilter" placeholder="Filter by author...">
-                    <button class="btn btn-secondary" onclick="filterByAuthor()">
-                        <i class="fas fa-filter"></i> Filter
-                    </button>
-                </div>
-            </div>
-        </div>
+            </form>
 
-        <!-- Right Panel: Book List -->
-        <div class="right-panel">
-            <div class="books-header">
-                <h2><i class="fas fa-list"></i> Book List</h2>
-                <div class="header-controls">
-                    <button class="btn btn-primary" onclick="loadBooks()">
-                        <i class="fas fa-sync-alt"></i> Refresh
-                    </button>
-                    <div class="pagination-info" id="paginationInfo"></div>
+            <!-- Quick Stats -->
+            <div class="quick-stats">
+                <h3><i class="fas fa-chart-simple"></i> Quick Stats</h3>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-book-open"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="statTotalBooks">0</div>
+                            <div class="stat-label">Total Books</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="statUniqueAuthors">0</div>
+                            <div class="stat-label">Authors</div>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </section>
 
-            <div class="books-list" id="booksList">
-                <!-- Books will be loaded here -->
-                <div class="loading">Loading books...</div>
+        <!-- Right Section: Book List -->
+        <section class="list-section">
+            <div class="section-header">
+                <h2><i class="fas fa-list"></i> Book Library</h2>
+                <div class="controls">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text"
+                               id="searchInput"
+                               placeholder="Search books...">
+                        <button type="button" class="search-btn" onclick="searchBooks()">
+                            Search
+                        </button>
+                    </div>
+                    <button type="button" class="btn btn-secondary" onclick="loadBooks()">
+                        <i class="fas fa-sync"></i>
+                        Refresh
+                    </button>
+                </div>
             </div>
 
-            <div class="pagination" id="pagination">
-                <!-- Pagination will be generated here -->
+            <!-- Filter Section -->
+            <div class="filter-section">
+                <div class="filter-group">
+                    <label for="authorFilter">
+                        <i class="fas fa-filter"></i>
+                        Filter by Author:
+                    </label>
+                    <input type="text"
+                           id="authorFilter"
+                           placeholder="Enter author name">
+                    <button type="button" class="btn btn-small" onclick="filterByAuthor()">
+                        Apply
+                    </button>
+                    <button type="button" class="btn btn-small btn-outline" onclick="showAllBooks()">
+                        Clear
+                    </button>
+                </div>
             </div>
-        </div>
+
+            <!-- Books List -->
+            <div class="books-container">
+                <div class="books-list" id="booksList">
+                    <!-- Books will be loaded here -->
+                    <div class="loading-state">
+                        <div class="spinner">
+                            <i class="fas fa-book fa-spin"></i>
+                        </div>
+                        <p>Loading books...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination-container">
+                <div class="pagination-info" id="paginationInfo">
+                    Showing 0 of 0 books
+                </div>
+                <div class="pagination-controls">
+                    <div class="pagination" id="pagination"></div>
+                </div>
+            </div>
+        </section>
     </main>
 
     <!-- Footer -->
-    <footer class="footer">
-        <p>© 2024 Book Management System | GraphQL + PostgreSQL + Spring Boot 3.x</p>
-        <div class="footer-links">
-            <a href="/graphiql" target="_blank">
-                <i class="fas fa-code"></i> GraphiQL Interface
-            </a>
-            <a href="/actuator/health" target="_blank">
-                <i class="fas fa-heartbeat"></i> Health Check
-            </a>
-            <a href="https://github.com" target="_blank">
-                <i class="fab fa-github"></i> GitHub
-            </a>
+    <footer class="app-footer">
+        <div class="footer-content">
+            <div class="footer-info">
+                <p>
+                    <i class="fas fa-code"></i>
+                    Book Management System v1.0
+                </p>
+                <p>
+                    Powered by Spring Boot 3.2 & PostgreSQL
+                </p>
+            </div>
+            <div class="footer-links">
+                <a href="/graphiql" target="_blank" class="footer-link">
+                    <i class="fas fa-terminal"></i>
+                    GraphQL API
+                </a>
+                <a href="/actuator/health" target="_blank" class="footer-link">
+                    <i class="fas fa-heart"></i>
+                    Health Check
+                </a>
+            </div>
         </div>
     </footer>
-</div>
 
-<!-- Toast Notification -->
-<div id="toast" class="toast"></div>
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+</div>
 
 <script src="/static/js/app.js"></script>
 </body>

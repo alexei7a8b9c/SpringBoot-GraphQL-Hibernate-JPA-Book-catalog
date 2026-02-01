@@ -1,6 +1,6 @@
 // Configuration
 const GRAPHQL_URL = 'http://localhost:8080/graphql';
-const BOOKS_PER_PAGE = 5;
+const BOOKS_PER_PAGE = 8;
 let currentPage = 1;
 let totalBooks = 0;
 let allBooks = [];
@@ -12,27 +12,114 @@ const booksList = document.getElementById('booksList');
 const pagination = document.getElementById('pagination');
 const paginationInfo = document.getElementById('paginationInfo');
 const totalBooksElement = document.getElementById('totalBooks');
+const uniqueAuthorsElement = document.getElementById('uniqueAuthors');
+const statTotalBooksElement = document.getElementById('statTotalBooks');
+const statUniqueAuthorsElement = document.getElementById('statUniqueAuthors');
 const saveBtn = document.getElementById('saveBtn');
 const clearBtn = document.getElementById('clearBtn');
 const cancelBtn = document.getElementById('cancelBtn');
 const searchInput = document.getElementById('searchInput');
 const authorFilter = document.getElementById('authorFilter');
+const formMode = document.getElementById('formMode');
+
+// Initialize
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Initializing Book Manager...');
+    loadBooks();
+
+    // Form submission
+    bookForm.addEventListener('submit', saveBook);
+
+    // Clear form button
+    clearBtn.addEventListener('click', clearForm);
+
+    // Cancel edit button
+    cancelBtn.addEventListener('click', cancelEdit);
+
+    // Search on Enter key
+    searchInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            searchBooks();
+        }
+    });
+
+    // Filter on Enter key
+    authorFilter.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            filterByAuthor();
+        }
+    });
+
+    // Form validation on blur
+    document.getElementById('title').addEventListener('blur', validateTitle);
+    document.getElementById('author').addEventListener('blur', validateAuthor);
+
+    console.log('Book Manager initialized successfully');
+});
+
+// Form Validation Functions
+function validateTitle() {
+    const title = document.getElementById('title').value.trim();
+    const errorElement = document.getElementById('titleError');
+
+    if (!title) {
+        errorElement.textContent = 'Title is required';
+        return false;
+    }
+
+    if (title.length < 2) {
+        errorElement.textContent = 'Title must be at least 2 characters';
+        return false;
+    }
+
+    errorElement.textContent = '';
+    return true;
+}
+
+function validateAuthor() {
+    const author = document.getElementById('author').value.trim();
+    const errorElement = document.getElementById('authorError');
+
+    if (!author) {
+        errorElement.textContent = 'Author is required';
+        return false;
+    }
+
+    if (author.length < 2) {
+        errorElement.textContent = 'Author must be at least 2 characters';
+        return false;
+    }
+
+    errorElement.textContent = '';
+    return true;
+}
 
 // Toast Notification
 function showToast(message, type = 'success') {
     const toast = document.getElementById('toast');
-    toast.textContent = message;
-    toast.className = `toast ${type}`;
+    const icon = {
+        success: 'fas fa-check-circle',
+        error: 'fas fa-exclamation-circle',
+        warning: 'fas fa-exclamation-triangle',
+        info: 'fas fa-info-circle'
+    }[type];
+
+    toast.innerHTML = `
+        <i class="${icon}"></i>
+        <span>${message}</span>
+    `;
+    toast.className = `toast show ${type}`;
 
     setTimeout(() => {
-        toast.style.display = 'none';
+        toast.classList.remove('show');
     }, 3000);
-    toast.style.display = 'block';
 }
 
 // GraphQL Helper Function
 async function executeGraphQL(query, variables = {}) {
     try {
+        console.log('Executing GraphQL query:', { query, variables });
+
         const response = await fetch(GRAPHQL_URL, {
             method: 'POST',
             headers: {
@@ -44,12 +131,18 @@ async function executeGraphQL(query, variables = {}) {
             })
         });
 
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
         const result = await response.json();
 
         if (result.errors) {
+            console.error('GraphQL errors:', result.errors);
             throw new Error(result.errors[0].message);
         }
 
+        console.log('GraphQL response:', result.data);
         return result.data;
     } catch (error) {
         console.error('GraphQL Error:', error);
@@ -65,7 +158,6 @@ async function loadStatistics() {
                 booksCount
                 books {
                     author
-                    publisher
                 }
             }
         `;
@@ -73,26 +165,33 @@ async function loadStatistics() {
         const data = await executeGraphQL(query);
 
         if (data) {
-            // Total books
-            totalBooksElement.textContent = data.booksCount;
-
-            // Unique authors
+            // Update all statistics elements
+            const count = data.booksCount;
             const authors = [...new Set(data.books.map(book => book.author))];
-            document.getElementById('uniqueAuthors').textContent = authors.length;
 
-            // Unique publishers
-            const publishers = [...new Set(data.books.filter(book => book.publisher).map(book => book.publisher))];
-            document.getElementById('uniquePublishers').textContent = publishers.length;
+            totalBooksElement.textContent = `${count} books`;
+            uniqueAuthorsElement.textContent = `${authors.length} authors`;
+            statTotalBooksElement.textContent = count;
+            statUniqueAuthorsElement.textContent = authors.length;
+
+            console.log('Statistics loaded:', { count, authors: authors.length });
         }
     } catch (error) {
-        showToast('Failed to load statistics', 'error');
+        console.error('Failed to load statistics:', error);
     }
 }
 
 // Load All Books
 async function loadBooks() {
     try {
-        booksList.innerHTML = '<div class="loading">Loading books...</div>';
+        booksList.innerHTML = `
+            <div class="loading-state">
+                <div class="spinner">
+                    <i class="fas fa-book fa-spin"></i>
+                </div>
+                <p>Loading books...</p>
+            </div>
+        `;
 
         const query = `
             query {
@@ -112,13 +211,26 @@ async function loadBooks() {
         if (data && data.books) {
             allBooks = data.books;
             totalBooks = data.books.length;
+            currentPage = 1;
             updateBooksDisplay();
             updatePagination();
             loadStatistics();
+            showToast('Books loaded successfully');
+
+            console.log(`Loaded ${data.books.length} books`);
         }
     } catch (error) {
-        showToast('Failed to load books', 'error');
-        booksList.innerHTML = '<div class="error">Failed to load books. Please try again.</div>';
+        console.error('Failed to load books:', error);
+        showToast('Failed to load books. Please check your connection.', 'error');
+        booksList.innerHTML = `
+            <div class="no-books">
+                <i class="fas fa-book-open"></i>
+                <p>Failed to load books. Please try again.</p>
+                <p style="font-size: 0.875rem; color: var(--gray-500); margin-top: 0.5rem;">
+                    Error: ${error.message}
+                </p>
+            </div>
+        `;
     }
 }
 
@@ -132,7 +244,14 @@ async function searchBooks() {
     }
 
     try {
-        booksList.innerHTML = '<div class="loading">Searching books...</div>';
+        booksList.innerHTML = `
+            <div class="loading-state">
+                <div class="spinner">
+                    <i class="fas fa-search fa-spin"></i>
+                </div>
+                <p>Searching books...</p>
+            </div>
+        `;
 
         const query = `
             query SearchBooks($title: String!) {
@@ -158,6 +277,7 @@ async function searchBooks() {
             showToast(`Found ${totalBooks} books matching "${searchTerm}"`);
         }
     } catch (error) {
+        console.error('Failed to search books:', error);
         showToast('Failed to search books', 'error');
     }
 }
@@ -172,7 +292,14 @@ async function filterByAuthor() {
     }
 
     try {
-        booksList.innerHTML = '<div class="loading">Filtering books...</div>';
+        booksList.innerHTML = `
+            <div class="loading-state">
+                <div class="spinner">
+                    <i class="fas fa-filter fa-spin"></i>
+                </div>
+                <p>Filtering books...</p>
+            </div>
+        `;
 
         const query = `
             query BooksByAuthor($author: String!) {
@@ -198,6 +325,7 @@ async function filterByAuthor() {
             showToast(`Found ${totalBooks} books by ${author}`);
         }
     } catch (error) {
+        console.error('Failed to filter books:', error);
         showToast('Failed to filter books', 'error');
     }
 }
@@ -216,29 +344,46 @@ function updateBooksDisplay() {
     const booksToShow = allBooks.slice(startIndex, endIndex);
 
     if (booksToShow.length === 0) {
-        booksList.innerHTML = '<div class="no-books">No books found.</div>';
+        booksList.innerHTML = `
+            <div class="no-books">
+                <i class="fas fa-book-open"></i>
+                <p>No books found in the library.</p>
+                <p style="font-size: 0.875rem; color: var(--gray-500); margin-top: 0.5rem;">
+                    Try adding a new book or clearing your filters.
+                </p>
+            </div>
+        `;
         return;
     }
 
     booksList.innerHTML = booksToShow.map(book => `
-        <div class="book-card" data-id="${book.id}">
+        <div class="book-card fade-in" data-id="${book.id}">
             <div class="book-header">
-                <div>
-                    <div class="book-title">${book.title}</div>
-                    <div class="book-meta">
-                        <span><i class="fas fa-user"></i> ${book.author}</span>
-                        <span><i class="fas fa-building"></i> ${book.publisher || 'Not specified'}</span>
-                        <span><i class="far fa-calendar"></i> ${formatDate(book.createdAt)}</span>
-                    </div>
-                </div>
+                <div class="book-title">${book.title}</div>
                 <div class="book-id">#${book.id}</div>
             </div>
+            <div class="book-meta">
+                <span>
+                    <i class="fas fa-user"></i>
+                    ${book.author}
+                </span>
+                <span>
+                    <i class="fas fa-building"></i>
+                    ${book.publisher || 'No publisher'}
+                </span>
+                <span>
+                    <i class="fas fa-calendar"></i>
+                    Added: ${formatDate(book.createdAt)}
+                </span>
+            </div>
             <div class="book-actions">
-                <button class="action-btn edit" onclick="editBook('${book.id}')">
-                    <i class="fas fa-edit"></i> Edit
+                <button class="btn-edit" onclick="editBook('${book.id}')">
+                    <i class="fas fa-edit"></i>
+                    Edit
                 </button>
-                <button class="action-btn delete" onclick="deleteBook('${book.id}')">
-                    <i class="fas fa-trash"></i> Delete
+                <button class="btn-delete" onclick="deleteBook('${book.id}')">
+                    <i class="fas fa-trash"></i>
+                    Delete
                 </button>
             </div>
         </div>
@@ -249,7 +394,10 @@ function updateBooksDisplay() {
 function updatePagination() {
     const totalPages = Math.ceil(totalBooks / BOOKS_PER_PAGE);
 
-    paginationInfo.textContent = `Page ${currentPage} of ${totalPages} (${totalBooks} total books)`;
+    const showingStart = (currentPage - 1) * BOOKS_PER_PAGE + 1;
+    const showingEnd = Math.min(currentPage * BOOKS_PER_PAGE, totalBooks);
+
+    paginationInfo.textContent = `Showing ${showingStart} to ${showingEnd} of ${totalBooks} books`;
 
     if (totalPages <= 1) {
         pagination.innerHTML = '';
@@ -260,7 +408,11 @@ function updatePagination() {
 
     // Previous button
     if (currentPage > 1) {
-        paginationHTML += `<button class="page-btn" onclick="changePage(${currentPage - 1})">&laquo; Prev</button>`;
+        paginationHTML += `
+            <button class="page-btn" onclick="changePage(${currentPage - 1})">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+        `;
     }
 
     // Page numbers
@@ -282,7 +434,11 @@ function updatePagination() {
 
     // Next button
     if (currentPage < totalPages) {
-        paginationHTML += `<button class="page-btn" onclick="changePage(${currentPage + 1})">Next &raquo;</button>`;
+        paginationHTML += `
+            <button class="page-btn" onclick="changePage(${currentPage + 1})">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        `;
     }
 
     pagination.innerHTML = paginationHTML;
@@ -298,12 +454,16 @@ function changePage(page) {
 
 // Format Date
 function formatDate(dateString) {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric'
-    });
+    try {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric'
+        });
+    } catch (error) {
+        return 'Unknown date';
+    }
 }
 
 // Edit Book
@@ -326,24 +486,51 @@ async function editBook(id) {
             const book = data.bookById;
             editingBookId = book.id;
 
+            // Fill form with book data
             document.getElementById('bookId').value = book.id;
             document.getElementById('title').value = book.title;
             document.getElementById('author').value = book.author;
             document.getElementById('publisher').value = book.publisher || '';
 
-            saveBtn.innerHTML = '<i class="fas fa-save"></i> Update Book';
+            // Update form mode
+            const modeBadge = formMode.querySelector('.mode-badge');
+            modeBadge.textContent = 'Editing';
+            modeBadge.style.background = 'var(--warning)';
+
+            // Update button text
+            saveBtn.innerHTML = `
+                <i class="fas fa-save"></i>
+                Update Book
+            `;
+
+            // Show cancel button
             cancelBtn.style.display = 'flex';
 
-            showToast(`Editing book: ${book.title}`, 'warning');
+            // Clear validation errors
+            document.getElementById('titleError').textContent = '';
+            document.getElementById('authorError').textContent = '';
+
+            showToast(`Editing: ${book.title}`, 'info');
+
+            // Scroll to form
+            document.querySelector('.form-section').scrollIntoView({
+                behavior: 'smooth'
+            });
+
+            console.log('Editing book:', book);
         }
     } catch (error) {
+        console.error('Failed to load book for editing:', error);
         showToast('Failed to load book for editing', 'error');
     }
 }
 
 // Delete Book
 async function deleteBook(id) {
-    if (!confirm('Are you sure you want to delete this book?')) {
+    const bookCard = document.querySelector(`.book-card[data-id="${id}"]`);
+    const bookTitle = bookCard ? bookCard.querySelector('.book-title').textContent : 'this book';
+
+    if (!confirm(`Are you sure you want to delete "${bookTitle}"? This action cannot be undone.`)) {
         return;
     }
 
@@ -357,8 +544,18 @@ async function deleteBook(id) {
         const data = await executeGraphQL(query, { id: id });
 
         if (data && data.deleteBook) {
-            showToast('Book deleted successfully');
-            loadBooks();
+            showToast(`"${bookTitle}" deleted successfully`);
+
+            // Remove book from list with animation
+            if (bookCard) {
+                bookCard.style.opacity = '0';
+                bookCard.style.transform = 'translateX(-100px)';
+                setTimeout(() => {
+                    loadBooks();
+                }, 300);
+            } else {
+                loadBooks();
+            }
 
             // If we were editing this book, clear the form
             if (editingBookId === id) {
@@ -366,6 +563,7 @@ async function deleteBook(id) {
             }
         }
     } catch (error) {
+        console.error('Failed to delete book:', error);
         showToast('Failed to delete book', 'error');
     }
 }
@@ -374,20 +572,37 @@ async function deleteBook(id) {
 async function saveBook(event) {
     event.preventDefault();
 
+    console.log('Saving book...');
+
+    // Validate form
+    const isTitleValid = validateTitle();
+    const isAuthorValid = validateAuthor();
+
+    if (!isTitleValid || !isAuthorValid) {
+        showToast('Please fix validation errors', 'error');
+        return;
+    }
+
     const id = document.getElementById('bookId').value;
     const title = document.getElementById('title').value.trim();
     const author = document.getElementById('author').value.trim();
     const publisher = document.getElementById('publisher').value.trim();
 
-    // Validation
-    if (!title || !author) {
-        showToast('Title and Author are required', 'error');
-        return;
-    }
+    // Add loading state to button
+    const originalBtnContent = saveBtn.innerHTML;
+    const originalBtnDisabled = saveBtn.disabled;
+
+    saveBtn.innerHTML = `
+        <i class="fas fa-spinner fa-spin"></i>
+        <span>Saving...</span>
+    `;
+    saveBtn.disabled = true;
 
     try {
         if (editingBookId) {
             // Update existing book
+            console.log('Updating book:', { id: editingBookId, title, author, publisher });
+
             const query = `
                 mutation UpdateBook($id: ID!, $input: BookInput!) {
                     updateBook(id: $id, input: $input) {
@@ -401,7 +616,11 @@ async function saveBook(event) {
 
             const variables = {
                 id: editingBookId,
-                input: { title, author, publisher: publisher || null }
+                input: {
+                    title,
+                    author,
+                    publisher: publisher || null
+                }
             };
 
             const data = await executeGraphQL(query, variables);
@@ -413,6 +632,8 @@ async function saveBook(event) {
             }
         } else {
             // Create new book
+            console.log('Creating book:', { title, author, publisher });
+
             const query = `
                 mutation AddBook($input: BookInput!) {
                     addBook(input: $input) {
@@ -425,7 +646,11 @@ async function saveBook(event) {
             `;
 
             const variables = {
-                input: { title, author, publisher: publisher || null }
+                input: {
+                    title,
+                    author,
+                    publisher: publisher || null
+                }
             };
 
             const data = await executeGraphQL(query, variables);
@@ -437,7 +662,12 @@ async function saveBook(event) {
             }
         }
     } catch (error) {
-        showToast('Failed to save book', 'error');
+        console.error('Failed to save book:', error);
+        showToast('Failed to save book: ' + error.message, 'error');
+    } finally {
+        // Restore button state
+        saveBtn.innerHTML = originalBtnContent;
+        saveBtn.disabled = originalBtnDisabled;
     }
 }
 
@@ -446,8 +676,27 @@ function clearForm() {
     bookForm.reset();
     document.getElementById('bookId').value = '';
     editingBookId = null;
-    saveBtn.innerHTML = '<i class="fas fa-save"></i> Save Book';
+
+    // Reset form mode
+    const modeBadge = formMode.querySelector('.mode-badge');
+    modeBadge.textContent = 'New Book';
+    modeBadge.style.background = 'var(--primary-light)';
+
+    // Reset button text
+    saveBtn.innerHTML = `
+        <i class="fas fa-save"></i>
+        Save Book
+    `;
+
+    // Hide cancel button
     cancelBtn.style.display = 'none';
+
+    // Clear errors
+    document.getElementById('titleError').textContent = '';
+    document.getElementById('authorError').textContent = '';
+    document.getElementById('publisherError').textContent = '';
+
+    showToast('Form cleared', 'info');
 }
 
 // Cancel Edit
@@ -456,41 +705,12 @@ function cancelEdit() {
     showToast('Edit cancelled', 'warning');
 }
 
-// Event Listeners
-document.addEventListener('DOMContentLoaded', function() {
-    // Load initial data
-    loadBooks();
-
-    // Form submission
-    bookForm.addEventListener('submit', saveBook);
-
-    // Clear form button
-    clearBtn.addEventListener('click', clearForm);
-
-    // Cancel edit button
-    cancelBtn.addEventListener('click', cancelEdit);
-
-    // Search on Enter key
-    searchInput.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            searchBooks();
-        }
-    });
-
-    // Filter on Enter key
-    authorFilter.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            filterByAuthor();
-        }
-    });
-});
-
 // Keyboard shortcuts
 document.addEventListener('keydown', function(e) {
     // Ctrl+S to save
     if (e.ctrlKey && e.key === 's') {
         e.preventDefault();
-        saveBtn.click();
+        if (!saveBtn.disabled) saveBtn.click();
     }
 
     // Esc to cancel edit
@@ -504,3 +724,23 @@ document.addEventListener('keydown', function(e) {
         loadBooks();
     }
 });
+
+// Test function to verify fields work
+function testInputFields() {
+    console.log('Testing input fields...');
+
+    const titleInput = document.getElementById('title');
+    const authorInput = document.getElementById('author');
+    const publisherInput = document.getElementById('publisher');
+
+    console.log('Title input:', titleInput);
+    console.log('Author input:', authorInput);
+    console.log('Publisher input:', publisherInput);
+
+    // Test setting values
+    titleInput.value = 'Test Book';
+    authorInput.value = 'Test Author';
+    publisherInput.value = 'Test Publisher';
+
+    console.log('Input values set successfully');
+}

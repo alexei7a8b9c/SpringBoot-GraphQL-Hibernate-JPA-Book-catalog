@@ -178,3 +178,1824 @@
     order by
         b1_0.created_at desc
 2026-02-01T14:54:24.651+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-8] o.s.g.server.webmvc.GraphQlHttpHandler   : Execution complete
+2026-02-01T14:54:49.462+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-9] o.s.g.server.webmvc.GraphQlHttpHandler   : Executing: document='
+            query GetBook($id: ID!) {
+                bookById(id: $id) {
+                    id
+                    title
+                    author
+                    publisher
+                }
+            }
+        ', variables={id=1}, id=36d0e512-27c6-2f93-344c-b85d731ca06c, Locale=ru_RU
+2026-02-01T14:54:49.469+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-9] c.e.demo.controller.BookController       : Fetching book by id: 1 via GraphQL
+2026-02-01T14:54:49.470+03:00  INFO 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-9] com.example.demo.service.BookService     : Fetching book with id: 1
+2026-02-01T14:54:49.488+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-9] org.hibernate.SQL                        : 
+    select
+        b1_0.id,
+        b1_0.author,
+        b1_0.created_at,
+        b1_0.publisher,
+        b1_0.title,
+        b1_0.updated_at 
+    from
+        books b1_0 
+    where
+        b1_0.id=?
+2026-02-01T14:54:49.497+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-9] o.s.g.server.webmvc.GraphQlHttpHandler   : Execution complete
+2026-02-01T14:55:07.318+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-1] o.s.g.server.webmvc.GraphQlHttpHandler   : Executing: document='
+                mutation UpdateBook($id: ID!, $input: BookInput!) {
+                    updateBook(id: $id, input: $input) {
+                        id
+                        title
+                        author
+                        publisher
+                    }
+                }
+            ', variables={id=1, input={title=Book, author=Author, publisher=12/12/2010}}, id=3cd47957-6157-fb30-69dc-8bbb7b46e003, Locale=ru_RU
+2026-02-01T14:55:07.331+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-1] c.e.demo.controller.BookController       : Updating book id: 1 via GraphQL
+2026-02-01T14:55:07.333+03:00  INFO 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-1] com.example.demo.service.BookService     : Updating book with id: 1
+2026-02-01T14:55:07.334+03:00  INFO 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-1] com.example.demo.service.BookService     : Fetching book with id: 1
+2026-02-01T14:55:07.335+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-1] org.hibernate.SQL                        : 
+    select
+        b1_0.id,
+        b1_0.author,
+        b1_0.created_at,
+        b1_0.publisher,
+        b1_0.title,
+        b1_0.updated_at 
+    from
+        books b1_0 
+    where
+        b1_0.id=?
+2026-02-01T14:55:07.354+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-1] org.hibernate.SQL                        : 
+    update
+        books 
+    set
+        author=?,
+        publisher=?,
+        title=?,
+        updated_at=? 
+    where
+        id=?
+2026-02-01T14:55:07.364+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-1] o.s.g.server.webmvc.GraphQlHttpHandler   : Execution complete
+2026-02-01T14:55:07.373+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-3] o.s.g.server.webmvc.GraphQlHttpHandler   : Executing: document='
+            query {
+                books {
+                    id
+                    title
+                    author
+                    publisher
+                    createdAt
+                    updatedAt
+                }
+            }
+        ', id=1abd2e78-1751-de8c-38ac-506e69b36299, Locale=ru_RU
+2026-02-01T14:55:07.378+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-3] c.e.demo.controller.BookController       : Fetching all books via GraphQL
+2026-02-01T14:55:07.379+03:00  INFO 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-3] com.example.demo.service.BookService     : Fetching all books
+2026-02-01T14:55:07.382+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-3] org.hibernate.SQL                        : 
+    select
+        b1_0.id,
+        b1_0.author,
+        b1_0.created_at,
+        b1_0.publisher,
+        b1_0.title,
+        b1_0.updated_at 
+    from
+        books b1_0 
+    order by
+        b1_0.created_at desc
+2026-02-01T14:55:07.388+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-3] o.s.g.server.webmvc.GraphQlHttpHandler   : Execution complete
+2026-02-01T14:55:07.401+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-2] o.s.g.server.webmvc.GraphQlHttpHandler   : Executing: document='
+            query {
+                booksCount
+                books {
+                    author
+                    publisher
+                }
+            }
+        ', id=bb79bac1-5711-0545-d468-326ac212a877, Locale=ru_RU
+2026-02-01T14:55:07.404+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-2] c.e.demo.controller.BookController       : Getting books count via GraphQL
+2026-02-01T14:55:07.406+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        count(*) 
+    from
+        books b1_0
+2026-02-01T14:55:07.410+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-2] c.e.demo.controller.BookController       : Fetching all books via GraphQL
+2026-02-01T14:55:07.411+03:00  INFO 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-2] com.example.demo.service.BookService     : Fetching all books
+2026-02-01T14:55:07.416+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        b1_0.id,
+        b1_0.author,
+        b1_0.created_at,
+        b1_0.publisher,
+        b1_0.title,
+        b1_0.updated_at 
+    from
+        books b1_0 
+    order by
+        b1_0.created_at desc
+2026-02-01T14:55:07.425+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-2] o.s.g.server.webmvc.GraphQlHttpHandler   : Execution complete
+2026-02-01T14:55:12.583+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-7] o.s.g.server.webmvc.GraphQlHttpHandler   : Executing: document='
+            query {
+                books {
+                    id
+                    title
+                    author
+                    publisher
+                    createdAt
+                    updatedAt
+                }
+            }
+        ', id=27948e82-2649-50de-f082-5669baa4fc6c, Locale=ru_RU
+2026-02-01T14:55:12.591+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-7] c.e.demo.controller.BookController       : Fetching all books via GraphQL
+2026-02-01T14:55:12.593+03:00  INFO 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-7] com.example.demo.service.BookService     : Fetching all books
+2026-02-01T14:55:12.597+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-7] org.hibernate.SQL                        : 
+    select
+        b1_0.id,
+        b1_0.author,
+        b1_0.created_at,
+        b1_0.publisher,
+        b1_0.title,
+        b1_0.updated_at 
+    from
+        books b1_0 
+    order by
+        b1_0.created_at desc
+2026-02-01T14:55:12.603+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-7] o.s.g.server.webmvc.GraphQlHttpHandler   : Execution complete
+2026-02-01T14:55:12.615+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-8] o.s.g.server.webmvc.GraphQlHttpHandler   : Executing: document='
+            query {
+                booksCount
+                books {
+                    author
+                    publisher
+                }
+            }
+        ', id=17bee8c6-7fcf-1da6-729f-a37bd7ee9430, Locale=ru_RU
+2026-02-01T14:55:12.618+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-8] c.e.demo.controller.BookController       : Getting books count via GraphQL
+2026-02-01T14:55:12.620+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-8] org.hibernate.SQL                        : 
+    select
+        count(*) 
+    from
+        books b1_0
+2026-02-01T14:55:12.626+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-8] c.e.demo.controller.BookController       : Fetching all books via GraphQL
+2026-02-01T14:55:12.627+03:00  INFO 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-8] com.example.demo.service.BookService     : Fetching all books
+2026-02-01T14:55:12.629+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-8] org.hibernate.SQL                        : 
+    select
+        b1_0.id,
+        b1_0.author,
+        b1_0.created_at,
+        b1_0.publisher,
+        b1_0.title,
+        b1_0.updated_at 
+    from
+        books b1_0 
+    order by
+        b1_0.created_at desc
+2026-02-01T14:55:12.634+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-8] o.s.g.server.webmvc.GraphQlHttpHandler   : Execution complete
+2026-02-01T14:55:50.877+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-9] o.s.g.server.webmvc.GraphQlHttpHandler   : Executing: document='
+            query {
+                books {
+                    id
+                    title
+                    author
+                    publisher
+                    createdAt
+                    updatedAt
+                }
+            }
+        ', id=ca1287ef-9b20-9d57-66df-c2a0d496ae08, Locale=ru_RU
+2026-02-01T14:55:50.883+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-9] c.e.demo.controller.BookController       : Fetching all books via GraphQL
+2026-02-01T14:55:50.885+03:00  INFO 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-9] com.example.demo.service.BookService     : Fetching all books
+2026-02-01T14:55:50.888+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-9] org.hibernate.SQL                        : 
+    select
+        b1_0.id,
+        b1_0.author,
+        b1_0.created_at,
+        b1_0.publisher,
+        b1_0.title,
+        b1_0.updated_at 
+    from
+        books b1_0 
+    order by
+        b1_0.created_at desc
+2026-02-01T14:55:50.894+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-9] o.s.g.server.webmvc.GraphQlHttpHandler   : Execution complete
+2026-02-01T14:55:50.904+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-10] o.s.g.server.webmvc.GraphQlHttpHandler   : Executing: document='
+            query {
+                booksCount
+                books {
+                    author
+                    publisher
+                }
+            }
+        ', id=19227e74-730d-56ed-3433-d945c787299f, Locale=ru_RU
+2026-02-01T14:55:50.906+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-10] c.e.demo.controller.BookController       : Getting books count via GraphQL
+2026-02-01T14:55:50.907+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-10] org.hibernate.SQL                        : 
+    select
+        count(*) 
+    from
+        books b1_0
+2026-02-01T14:55:50.910+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-10] c.e.demo.controller.BookController       : Fetching all books via GraphQL
+2026-02-01T14:55:50.911+03:00  INFO 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-10] com.example.demo.service.BookService     : Fetching all books
+2026-02-01T14:55:50.913+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-10] org.hibernate.SQL                        : 
+    select
+        b1_0.id,
+        b1_0.author,
+        b1_0.created_at,
+        b1_0.publisher,
+        b1_0.title,
+        b1_0.updated_at 
+    from
+        books b1_0 
+    order by
+        b1_0.created_at desc
+2026-02-01T14:55:50.918+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-10] o.s.g.server.webmvc.GraphQlHttpHandler   : Execution complete
+2026-02-01T14:55:51.723+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-1] o.s.g.server.webmvc.GraphQlHttpHandler   : Executing: document='
+            query {
+                books {
+                    id
+                    title
+                    author
+                    publisher
+                    createdAt
+                    updatedAt
+                }
+            }
+        ', id=c918fc76-835f-ec0c-152d-a6dd85c5ab12, Locale=ru_RU
+2026-02-01T14:55:51.727+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-1] c.e.demo.controller.BookController       : Fetching all books via GraphQL
+2026-02-01T14:55:51.729+03:00  INFO 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-1] com.example.demo.service.BookService     : Fetching all books
+2026-02-01T14:55:51.731+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-1] org.hibernate.SQL                        : 
+    select
+        b1_0.id,
+        b1_0.author,
+        b1_0.created_at,
+        b1_0.publisher,
+        b1_0.title,
+        b1_0.updated_at 
+    from
+        books b1_0 
+    order by
+        b1_0.created_at desc
+2026-02-01T14:55:51.738+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-1] o.s.g.server.webmvc.GraphQlHttpHandler   : Execution complete
+2026-02-01T14:55:51.748+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-3] o.s.g.server.webmvc.GraphQlHttpHandler   : Executing: document='
+            query {
+                booksCount
+                books {
+                    author
+                    publisher
+                }
+            }
+        ', id=209aa5d5-cf74-930a-c306-99824592a436, Locale=ru_RU
+2026-02-01T14:55:51.752+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-3] c.e.demo.controller.BookController       : Getting books count via GraphQL
+2026-02-01T14:55:51.753+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-3] org.hibernate.SQL                        : 
+    select
+        count(*) 
+    from
+        books b1_0
+2026-02-01T14:55:51.758+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-3] c.e.demo.controller.BookController       : Fetching all books via GraphQL
+2026-02-01T14:55:51.758+03:00  INFO 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-3] com.example.demo.service.BookService     : Fetching all books
+2026-02-01T14:55:51.760+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-3] org.hibernate.SQL                        : 
+    select
+        b1_0.id,
+        b1_0.author,
+        b1_0.created_at,
+        b1_0.publisher,
+        b1_0.title,
+        b1_0.updated_at 
+    from
+        books b1_0 
+    order by
+        b1_0.created_at desc
+2026-02-01T14:55:51.764+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-3] o.s.g.server.webmvc.GraphQlHttpHandler   : Execution complete
+2026-02-01T14:55:56.752+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-2] o.s.g.server.webmvc.GraphQlHttpHandler   : Executing: document='
+            mutation DeleteBook($id: ID!) {
+                deleteBook(id: $id)
+            }
+        ', variables={id=1}, id=ba1eee2c-2a18-51b7-6fce-432e83caa9b2, Locale=ru_RU
+2026-02-01T14:55:56.756+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-2] c.e.demo.controller.BookController       : Deleting book id: 1 via GraphQL
+2026-02-01T14:55:56.763+03:00  INFO 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-2] com.example.demo.service.BookService     : Deleting book with id: 1
+2026-02-01T14:55:56.787+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        count(*) 
+    from
+        books b1_0 
+    where
+        b1_0.id=?
+2026-02-01T14:55:56.792+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        b1_0.id,
+        b1_0.author,
+        b1_0.created_at,
+        b1_0.publisher,
+        b1_0.title,
+        b1_0.updated_at 
+    from
+        books b1_0 
+    where
+        b1_0.id=?
+2026-02-01T14:55:56.805+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-2] org.hibernate.SQL                        : 
+    delete 
+    from
+        books 
+    where
+        id=?
+2026-02-01T14:55:56.809+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-2] o.s.g.server.webmvc.GraphQlHttpHandler   : Execution complete
+2026-02-01T14:55:56.819+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-4] o.s.g.server.webmvc.GraphQlHttpHandler   : Executing: document='
+            query {
+                books {
+                    id
+                    title
+                    author
+                    publisher
+                    createdAt
+                    updatedAt
+                }
+            }
+        ', id=9cec9680-b519-5fa9-f8ee-9f4b269bf483, Locale=ru_RU
+2026-02-01T14:55:56.822+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-4] c.e.demo.controller.BookController       : Fetching all books via GraphQL
+2026-02-01T14:55:56.823+03:00  INFO 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-4] com.example.demo.service.BookService     : Fetching all books
+2026-02-01T14:55:56.824+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        b1_0.id,
+        b1_0.author,
+        b1_0.created_at,
+        b1_0.publisher,
+        b1_0.title,
+        b1_0.updated_at 
+    from
+        books b1_0 
+    order by
+        b1_0.created_at desc
+2026-02-01T14:55:56.827+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-4] o.s.g.server.webmvc.GraphQlHttpHandler   : Execution complete
+2026-02-01T14:55:56.840+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-5] o.s.g.server.webmvc.GraphQlHttpHandler   : Executing: document='
+            query {
+                booksCount
+                books {
+                    author
+                    publisher
+                }
+            }
+        ', id=89fc9c8a-a66b-efd4-5987-1671e4f570e8, Locale=ru_RU
+2026-02-01T14:55:56.848+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-5] c.e.demo.controller.BookController       : Getting books count via GraphQL
+2026-02-01T14:55:56.850+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-5] org.hibernate.SQL                        : 
+    select
+        count(*) 
+    from
+        books b1_0
+2026-02-01T14:55:56.853+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-5] c.e.demo.controller.BookController       : Fetching all books via GraphQL
+2026-02-01T14:55:56.854+03:00  INFO 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-5] com.example.demo.service.BookService     : Fetching all books
+2026-02-01T14:55:56.856+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-5] org.hibernate.SQL                        : 
+    select
+        b1_0.id,
+        b1_0.author,
+        b1_0.created_at,
+        b1_0.publisher,
+        b1_0.title,
+        b1_0.updated_at 
+    from
+        books b1_0 
+    order by
+        b1_0.created_at desc
+2026-02-01T14:55:56.858+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-5] o.s.g.server.webmvc.GraphQlHttpHandler   : Execution complete
+2026-02-01T14:57:49.850+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-2] o.s.g.server.webmvc.GraphQlHttpHandler   : Executing: document='
+            query {
+                books {
+                    id
+                    title
+                    author
+                    publisher
+                    createdAt
+                    updatedAt
+                }
+            }
+        ', id=94608fb7-4ac7-8e85-6245-72c7e5672534, Locale=ru_RU
+2026-02-01T14:57:49.855+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-2] c.e.demo.controller.BookController       : Fetching all books via GraphQL
+2026-02-01T14:57:49.858+03:00  INFO 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-2] com.example.demo.service.BookService     : Fetching all books
+2026-02-01T14:57:49.862+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        b1_0.id,
+        b1_0.author,
+        b1_0.created_at,
+        b1_0.publisher,
+        b1_0.title,
+        b1_0.updated_at 
+    from
+        books b1_0 
+    order by
+        b1_0.created_at desc
+2026-02-01T14:57:49.866+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-2] o.s.g.server.webmvc.GraphQlHttpHandler   : Execution complete
+2026-02-01T14:57:49.876+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-4] o.s.g.server.webmvc.GraphQlHttpHandler   : Executing: document='
+            query {
+                booksCount
+                books {
+                    author
+                    publisher
+                }
+            }
+        ', id=f6ffcc65-4c1e-9ec1-aab7-07e3a636efa5, Locale=ru_RU
+2026-02-01T14:57:49.880+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-4] c.e.demo.controller.BookController       : Getting books count via GraphQL
+2026-02-01T14:57:49.882+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        count(*) 
+    from
+        books b1_0
+2026-02-01T14:57:49.885+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-4] c.e.demo.controller.BookController       : Fetching all books via GraphQL
+2026-02-01T14:57:49.886+03:00  INFO 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-4] com.example.demo.service.BookService     : Fetching all books
+2026-02-01T14:57:49.888+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        b1_0.id,
+        b1_0.author,
+        b1_0.created_at,
+        b1_0.publisher,
+        b1_0.title,
+        b1_0.updated_at 
+    from
+        books b1_0 
+    order by
+        b1_0.created_at desc
+2026-02-01T14:57:49.891+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-4] o.s.g.server.webmvc.GraphQlHttpHandler   : Execution complete
+2026-02-01T15:08:37.098+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-10] o.s.g.server.webmvc.GraphQlHttpHandler   : Executing: document='
+            query {
+                books {
+                    id
+                    title
+                    author
+                    publisher
+                    createdAt
+                    updatedAt
+                }
+            }
+        ', id=21bcc1d5-375c-1b0a-c34a-bca720e7e849, Locale=ru_RU
+2026-02-01T15:08:37.116+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-10] c.e.demo.controller.BookController       : Fetching all books via GraphQL
+2026-02-01T15:08:37.119+03:00  INFO 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-10] com.example.demo.service.BookService     : Fetching all books
+2026-02-01T15:08:37.122+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-10] org.hibernate.SQL                        : 
+    select
+        b1_0.id,
+        b1_0.author,
+        b1_0.created_at,
+        b1_0.publisher,
+        b1_0.title,
+        b1_0.updated_at 
+    from
+        books b1_0 
+    order by
+        b1_0.created_at desc
+2026-02-01T15:08:37.131+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-10] o.s.g.server.webmvc.GraphQlHttpHandler   : Execution complete
+2026-02-01T15:08:37.535+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-3] o.s.g.server.webmvc.GraphQlHttpHandler   : Executing: document='
+            query {
+                booksCount
+                books {
+                    author
+                    publisher
+                }
+            }
+        ', id=1453287a-383c-7635-af65-63b628938f04, Locale=ru_RU
+2026-02-01T15:08:37.540+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-3] c.e.demo.controller.BookController       : Getting books count via GraphQL
+2026-02-01T15:08:37.542+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-3] org.hibernate.SQL                        : 
+    select
+        count(*) 
+    from
+        books b1_0
+2026-02-01T15:08:37.546+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-3] c.e.demo.controller.BookController       : Fetching all books via GraphQL
+2026-02-01T15:08:37.547+03:00  INFO 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-3] com.example.demo.service.BookService     : Fetching all books
+2026-02-01T15:08:37.553+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-3] org.hibernate.SQL                        : 
+    select
+        b1_0.id,
+        b1_0.author,
+        b1_0.created_at,
+        b1_0.publisher,
+        b1_0.title,
+        b1_0.updated_at 
+    from
+        books b1_0 
+    order by
+        b1_0.created_at desc
+2026-02-01T15:08:37.557+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-3] o.s.g.server.webmvc.GraphQlHttpHandler   : Execution complete
+2026-02-01T15:08:50.157+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-2] o.s.g.server.webmvc.GraphQlHttpHandler   : Executing: document='
+            query {
+                books {
+                    id
+                    title
+                    author
+                    publisher
+                    createdAt
+                    updatedAt
+                }
+            }
+        ', id=f192d7b1-2837-b6cc-9359-6c0d18b11d54, Locale=ru_RU
+2026-02-01T15:08:50.160+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-2] c.e.demo.controller.BookController       : Fetching all books via GraphQL
+2026-02-01T15:08:50.163+03:00  INFO 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-2] com.example.demo.service.BookService     : Fetching all books
+2026-02-01T15:08:50.165+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        b1_0.id,
+        b1_0.author,
+        b1_0.created_at,
+        b1_0.publisher,
+        b1_0.title,
+        b1_0.updated_at 
+    from
+        books b1_0 
+    order by
+        b1_0.created_at desc
+2026-02-01T15:08:50.169+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-2] o.s.g.server.webmvc.GraphQlHttpHandler   : Execution complete
+2026-02-01T15:08:50.207+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-4] o.s.g.server.webmvc.GraphQlHttpHandler   : Executing: document='
+            query {
+                booksCount
+                books {
+                    author
+                    publisher
+                }
+            }
+        ', id=ccb2f6ed-cacd-0213-aa18-531faf31d863, Locale=ru_RU
+2026-02-01T15:08:50.211+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-4] c.e.demo.controller.BookController       : Getting books count via GraphQL
+2026-02-01T15:08:50.213+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        count(*) 
+    from
+        books b1_0
+2026-02-01T15:08:50.219+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-4] c.e.demo.controller.BookController       : Fetching all books via GraphQL
+2026-02-01T15:08:50.220+03:00  INFO 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-4] com.example.demo.service.BookService     : Fetching all books
+2026-02-01T15:08:50.222+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        b1_0.id,
+        b1_0.author,
+        b1_0.created_at,
+        b1_0.publisher,
+        b1_0.title,
+        b1_0.updated_at 
+    from
+        books b1_0 
+    order by
+        b1_0.created_at desc
+2026-02-01T15:08:50.225+03:00 DEBUG 84204 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-4] o.s.g.server.webmvc.GraphQlHttpHandler   : Execution complete
+2026-02-01T15:09:02.783+03:00  INFO 84204 --- [graphql-postgres-rest-demo] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-02-01T15:09:02.789+03:00  INFO 84204 --- [graphql-postgres-rest-demo] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariCP-BookDB - Shutdown initiated...
+2026-02-01T15:09:02.799+03:00  INFO 84204 --- [graphql-postgres-rest-demo] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariCP-BookDB - Shutdown completed.
+2026-02-01T15:09:21.463+03:00  INFO 69856 --- [graphql-postgres-rest-demo] [main] com.example.demo.DemoApplication         : Starting DemoApplication using Java 21.0.9 with PID 69856 (D:\IIdea\graphql-postgres-rest-demo\target\classes started by Администратор in D:\IIdea\graphql-postgres-rest-demo)
+2026-02-01T15:09:21.466+03:00 DEBUG 69856 --- [graphql-postgres-rest-demo] [main] com.example.demo.DemoApplication         : Running with Spring Boot v3.2.0, Spring v6.1.1
+2026-02-01T15:09:21.468+03:00  INFO 69856 --- [graphql-postgres-rest-demo] [main] com.example.demo.DemoApplication         : No active profile set, falling back to 1 default profile: "default"
+2026-02-01T15:09:23.746+03:00  INFO 69856 --- [graphql-postgres-rest-demo] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-02-01T15:09:23.998+03:00  INFO 69856 --- [graphql-postgres-rest-demo] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 236 ms. Found 1 JPA repository interface.
+2026-02-01T15:09:25.468+03:00  INFO 69856 --- [graphql-postgres-rest-demo] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-02-01T15:09:25.486+03:00  INFO 69856 --- [graphql-postgres-rest-demo] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-02-01T15:09:25.487+03:00  INFO 69856 --- [graphql-postgres-rest-demo] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.16]
+2026-02-01T15:09:25.598+03:00  INFO 69856 --- [graphql-postgres-rest-demo] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-02-01T15:09:25.598+03:00  INFO 69856 --- [graphql-postgres-rest-demo] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 4009 ms
+2026-02-01T15:09:26.117+03:00  INFO 69856 --- [graphql-postgres-rest-demo] [main] com.zaxxer.hikari.HikariDataSource       : HikariCP-BookDB - Starting...
+2026-02-01T15:09:26.438+03:00  INFO 69856 --- [graphql-postgres-rest-demo] [main] com.zaxxer.hikari.pool.HikariPool        : HikariCP-BookDB - Added connection org.postgresql.jdbc.PgConnection@6e364f1f
+2026-02-01T15:09:26.441+03:00  INFO 69856 --- [graphql-postgres-rest-demo] [main] com.zaxxer.hikari.HikariDataSource       : HikariCP-BookDB - Start completed.
+2026-02-01T15:09:26.642+03:00  INFO 69856 --- [graphql-postgres-rest-demo] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-02-01T15:09:26.771+03:00  INFO 69856 --- [graphql-postgres-rest-demo] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.3.1.Final
+2026-02-01T15:09:26.839+03:00  INFO 69856 --- [graphql-postgres-rest-demo] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-02-01T15:09:27.353+03:00  INFO 69856 --- [graphql-postgres-rest-demo] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-02-01T15:09:27.437+03:00  WARN 69856 --- [graphql-postgres-rest-demo] [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-02-01T15:09:28.760+03:00  INFO 69856 --- [graphql-postgres-rest-demo] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-02-01T15:09:28.847+03:00  INFO 69856 --- [graphql-postgres-rest-demo] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-02-01T15:09:29.832+03:00  INFO 69856 --- [graphql-postgres-rest-demo] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-02-01T15:09:30.854+03:00  INFO 69856 --- [graphql-postgres-rest-demo] [main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2026-02-01T15:09:31.503+03:00 DEBUG 69856 --- [graphql-postgres-rest-demo] [main] a.s.AnnotatedControllerExceptionResolver : @GraphQlException methods in ControllerAdvice beans: none
+2026-02-01T15:09:31.811+03:00  INFO 69856 --- [graphql-postgres-rest-demo] [main] efaultSchemaResourceGraphQlSourceBuilder : Loaded 1 resource(s) in the GraphQL schema.
+2026-02-01T15:09:31.812+03:00 DEBUG 69856 --- [graphql-postgres-rest-demo] [main] efaultSchemaResourceGraphQlSourceBuilder : Loaded GraphQL schema resources: (file [D:\IIdea\graphql-postgres-rest-demo\target\classes\graphql\schema.graphqls])
+2026-02-01T15:09:32.147+03:00  INFO 69856 --- [graphql-postgres-rest-demo] [main] o.s.b.a.g.GraphQlAutoConfiguration       : GraphQL schema inspection:
+	Unmapped fields: {}
+	Unmapped registrations: {}
+	Skipped types: []
+2026-02-01T15:09:32.187+03:00  INFO 69856 --- [graphql-postgres-rest-demo] [main] s.b.a.g.s.GraphQlWebMvcAutoConfiguration : GraphQL endpoint HTTP POST /graphql
+2026-02-01T15:09:33.562+03:00  INFO 69856 --- [graphql-postgres-rest-demo] [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 3 endpoint(s) beneath base path '/actuator'
+2026-02-01T15:09:33.746+03:00  INFO 69856 --- [graphql-postgres-rest-demo] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2026-02-01T15:09:33.770+03:00  INFO 69856 --- [graphql-postgres-rest-demo] [main] com.example.demo.DemoApplication         : Started DemoApplication in 13.308 seconds (process running for 16.093)
+2026-02-01T15:09:34.504+03:00  INFO 69856 --- [graphql-postgres-rest-demo] [RMI TCP Connection(2)-172.21.64.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-02-01T15:09:34.505+03:00  INFO 69856 --- [graphql-postgres-rest-demo] [RMI TCP Connection(2)-172.21.64.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-02-01T15:09:34.509+03:00  INFO 69856 --- [graphql-postgres-rest-demo] [RMI TCP Connection(2)-172.21.64.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 4 ms
+2026-02-01T15:09:53.267+03:00 DEBUG 69856 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-1] o.s.g.server.webmvc.GraphQlHttpHandler   : Executing: document='
+            query {
+                books {
+                    id
+                    title
+                    author
+                    publisher
+                    createdAt
+                    updatedAt
+                }
+            }
+        ', id=7ba9d10b-ab99-8857-697e-ea8623cf5fd0, Locale=ru_RU
+2026-02-01T15:09:53.450+03:00 DEBUG 69856 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-1] c.e.demo.controller.BookController       : Fetching all books via GraphQL
+2026-02-01T15:09:53.463+03:00  INFO 69856 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-1] com.example.demo.service.BookService     : Fetching all books
+2026-02-01T15:09:53.631+03:00 DEBUG 69856 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-1] org.hibernate.SQL                        : 
+    select
+        b1_0.id,
+        b1_0.author,
+        b1_0.created_at,
+        b1_0.publisher,
+        b1_0.title,
+        b1_0.updated_at 
+    from
+        books b1_0 
+    order by
+        b1_0.created_at desc
+2026-02-01T15:09:53.666+03:00 DEBUG 69856 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-1] o.s.g.server.webmvc.GraphQlHttpHandler   : Execution complete
+2026-02-01T15:09:53.717+03:00 DEBUG 69856 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-3] o.s.g.server.webmvc.GraphQlHttpHandler   : Executing: document='
+            query {
+                booksCount
+                books {
+                    author
+                    publisher
+                }
+            }
+        ', id=e5d6e7ef-c8bb-057a-d767-902ade70ea10, Locale=ru_RU
+2026-02-01T15:09:53.724+03:00 DEBUG 69856 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-3] c.e.demo.controller.BookController       : Getting books count via GraphQL
+2026-02-01T15:09:53.771+03:00 DEBUG 69856 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-3] org.hibernate.SQL                        : 
+    select
+        count(*) 
+    from
+        books b1_0
+2026-02-01T15:09:53.779+03:00 DEBUG 69856 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-3] c.e.demo.controller.BookController       : Fetching all books via GraphQL
+2026-02-01T15:09:53.780+03:00  INFO 69856 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-3] com.example.demo.service.BookService     : Fetching all books
+2026-02-01T15:09:53.783+03:00 DEBUG 69856 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-3] org.hibernate.SQL                        : 
+    select
+        b1_0.id,
+        b1_0.author,
+        b1_0.created_at,
+        b1_0.publisher,
+        b1_0.title,
+        b1_0.updated_at 
+    from
+        books b1_0 
+    order by
+        b1_0.created_at desc
+2026-02-01T15:09:53.787+03:00 DEBUG 69856 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-3] o.s.g.server.webmvc.GraphQlHttpHandler   : Execution complete
+2026-02-01T15:12:38.918+03:00  INFO 69856 --- [graphql-postgres-rest-demo] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-02-01T15:12:38.924+03:00  INFO 69856 --- [graphql-postgres-rest-demo] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariCP-BookDB - Shutdown initiated...
+2026-02-01T15:12:38.933+03:00  INFO 69856 --- [graphql-postgres-rest-demo] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariCP-BookDB - Shutdown completed.
+2026-02-01T15:12:56.967+03:00  INFO 84068 --- [graphql-postgres-rest-demo] [main] com.example.demo.DemoApplication         : Starting DemoApplication using Java 21.0.9 with PID 84068 (D:\IIdea\graphql-postgres-rest-demo\target\classes started by Администратор in D:\IIdea\graphql-postgres-rest-demo)
+2026-02-01T15:12:56.970+03:00 DEBUG 84068 --- [graphql-postgres-rest-demo] [main] com.example.demo.DemoApplication         : Running with Spring Boot v3.2.0, Spring v6.1.1
+2026-02-01T15:12:56.972+03:00  INFO 84068 --- [graphql-postgres-rest-demo] [main] com.example.demo.DemoApplication         : No active profile set, falling back to 1 default profile: "default"
+2026-02-01T15:12:59.453+03:00  INFO 84068 --- [graphql-postgres-rest-demo] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-02-01T15:12:59.871+03:00  INFO 84068 --- [graphql-postgres-rest-demo] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 397 ms. Found 1 JPA repository interface.
+2026-02-01T15:13:02.080+03:00  INFO 84068 --- [graphql-postgres-rest-demo] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-02-01T15:13:02.106+03:00  INFO 84068 --- [graphql-postgres-rest-demo] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-02-01T15:13:02.107+03:00  INFO 84068 --- [graphql-postgres-rest-demo] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.16]
+2026-02-01T15:13:02.302+03:00  INFO 84068 --- [graphql-postgres-rest-demo] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-02-01T15:13:02.302+03:00  INFO 84068 --- [graphql-postgres-rest-demo] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 5219 ms
+2026-02-01T15:13:03.243+03:00  INFO 84068 --- [graphql-postgres-rest-demo] [main] com.zaxxer.hikari.HikariDataSource       : HikariCP-BookDB - Starting...
+2026-02-01T15:13:03.945+03:00  INFO 84068 --- [graphql-postgres-rest-demo] [main] com.zaxxer.hikari.pool.HikariPool        : HikariCP-BookDB - Added connection org.postgresql.jdbc.PgConnection@5a466dd
+2026-02-01T15:13:03.950+03:00  INFO 84068 --- [graphql-postgres-rest-demo] [main] com.zaxxer.hikari.HikariDataSource       : HikariCP-BookDB - Start completed.
+2026-02-01T15:13:04.322+03:00  INFO 84068 --- [graphql-postgres-rest-demo] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-02-01T15:13:04.566+03:00  INFO 84068 --- [graphql-postgres-rest-demo] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.3.1.Final
+2026-02-01T15:13:04.833+03:00  INFO 84068 --- [graphql-postgres-rest-demo] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-02-01T15:13:05.588+03:00  INFO 84068 --- [graphql-postgres-rest-demo] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-02-01T15:13:05.761+03:00  WARN 84068 --- [graphql-postgres-rest-demo] [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-02-01T15:13:06.968+03:00  INFO 84464 --- [graphql-postgres-rest-demo] [main] com.example.demo.DemoApplication         : Starting DemoApplication using Java 21.0.9 with PID 84464 (D:\IIdea\graphql-postgres-rest-demo\target\classes started by Администратор in D:\IIdea\graphql-postgres-rest-demo)
+2026-02-01T15:13:06.971+03:00 DEBUG 84464 --- [graphql-postgres-rest-demo] [main] com.example.demo.DemoApplication         : Running with Spring Boot v3.2.0, Spring v6.1.1
+2026-02-01T15:13:06.973+03:00  INFO 84464 --- [graphql-postgres-rest-demo] [main] com.example.demo.DemoApplication         : No active profile set, falling back to 1 default profile: "default"
+2026-02-01T15:13:08.360+03:00  INFO 84068 --- [graphql-postgres-rest-demo] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-02-01T15:13:08.504+03:00  INFO 84068 --- [graphql-postgres-rest-demo] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-02-01T15:13:09.638+03:00  INFO 84464 --- [graphql-postgres-rest-demo] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-02-01T15:13:09.798+03:00  INFO 84068 --- [graphql-postgres-rest-demo] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-02-01T15:13:10.543+03:00  INFO 84464 --- [graphql-postgres-rest-demo] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 886 ms. Found 1 JPA repository interface.
+2026-02-01T15:13:13.345+03:00  INFO 84068 --- [graphql-postgres-rest-demo] [main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2026-02-01T15:13:14.647+03:00  INFO 84464 --- [graphql-postgres-rest-demo] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-02-01T15:13:14.673+03:00  INFO 84464 --- [graphql-postgres-rest-demo] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-02-01T15:13:14.674+03:00  INFO 84464 --- [graphql-postgres-rest-demo] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.16]
+2026-02-01T15:13:14.892+03:00 DEBUG 84068 --- [graphql-postgres-rest-demo] [main] a.s.AnnotatedControllerExceptionResolver : @GraphQlException methods in ControllerAdvice beans: none
+2026-02-01T15:13:14.905+03:00  INFO 84464 --- [graphql-postgres-rest-demo] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-02-01T15:13:14.906+03:00  INFO 84464 --- [graphql-postgres-rest-demo] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 7818 ms
+2026-02-01T15:13:15.596+03:00  INFO 84068 --- [graphql-postgres-rest-demo] [main] efaultSchemaResourceGraphQlSourceBuilder : Loaded 1 resource(s) in the GraphQL schema.
+2026-02-01T15:13:15.597+03:00 DEBUG 84068 --- [graphql-postgres-rest-demo] [main] efaultSchemaResourceGraphQlSourceBuilder : Loaded GraphQL schema resources: (file [D:\IIdea\graphql-postgres-rest-demo\target\classes\graphql\schema.graphqls])
+2026-02-01T15:13:15.952+03:00  INFO 84464 --- [graphql-postgres-rest-demo] [main] com.zaxxer.hikari.HikariDataSource       : HikariCP-BookDB - Starting...
+2026-02-01T15:13:16.359+03:00  INFO 84068 --- [graphql-postgres-rest-demo] [main] o.s.b.a.g.GraphQlAutoConfiguration       : GraphQL schema inspection:
+	Unmapped fields: {}
+	Unmapped registrations: {}
+	Skipped types: []
+2026-02-01T15:13:16.437+03:00  INFO 84068 --- [graphql-postgres-rest-demo] [main] s.b.a.g.s.GraphQlWebMvcAutoConfiguration : GraphQL endpoint HTTP POST /graphql
+2026-02-01T15:13:16.705+03:00  INFO 84464 --- [graphql-postgres-rest-demo] [main] com.zaxxer.hikari.pool.HikariPool        : HikariCP-BookDB - Added connection org.postgresql.jdbc.PgConnection@1760e594
+2026-02-01T15:13:16.714+03:00  INFO 84464 --- [graphql-postgres-rest-demo] [main] com.zaxxer.hikari.HikariDataSource       : HikariCP-BookDB - Start completed.
+2026-02-01T15:13:17.109+03:00  INFO 84464 --- [graphql-postgres-rest-demo] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-02-01T15:13:17.324+03:00  INFO 84464 --- [graphql-postgres-rest-demo] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.3.1.Final
+2026-02-01T15:13:17.553+03:00  INFO 84464 --- [graphql-postgres-rest-demo] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-02-01T15:13:19.486+03:00  INFO 84464 --- [graphql-postgres-rest-demo] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-02-01T15:13:19.635+03:00  WARN 84464 --- [graphql-postgres-rest-demo] [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-02-01T15:13:20.435+03:00  INFO 84068 --- [graphql-postgres-rest-demo] [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 3 endpoint(s) beneath base path '/actuator'
+2026-02-01T15:13:20.807+03:00  INFO 84068 --- [graphql-postgres-rest-demo] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2026-02-01T15:13:20.844+03:00  INFO 84068 --- [graphql-postgres-rest-demo] [main] com.example.demo.DemoApplication         : Started DemoApplication in 24.932 seconds (process running for 26.784)
+2026-02-01T15:13:22.091+03:00  INFO 84464 --- [graphql-postgres-rest-demo] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-02-01T15:13:22.829+03:00  INFO 84464 --- [graphql-postgres-rest-demo] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-02-01T15:13:24.412+03:00  INFO 84464 --- [graphql-postgres-rest-demo] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-02-01T15:13:25.667+03:00  INFO 84464 --- [graphql-postgres-rest-demo] [main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2026-02-01T15:13:26.420+03:00 DEBUG 84464 --- [graphql-postgres-rest-demo] [main] a.s.AnnotatedControllerExceptionResolver : @GraphQlException methods in ControllerAdvice beans: none
+2026-02-01T15:13:26.822+03:00  INFO 84464 --- [graphql-postgres-rest-demo] [main] efaultSchemaResourceGraphQlSourceBuilder : Loaded 1 resource(s) in the GraphQL schema.
+2026-02-01T15:13:26.823+03:00 DEBUG 84464 --- [graphql-postgres-rest-demo] [main] efaultSchemaResourceGraphQlSourceBuilder : Loaded GraphQL schema resources: (file [D:\IIdea\graphql-postgres-rest-demo\target\classes\graphql\schema.graphqls])
+2026-02-01T15:13:27.217+03:00  INFO 84464 --- [graphql-postgres-rest-demo] [main] o.s.b.a.g.GraphQlAutoConfiguration       : GraphQL schema inspection:
+	Unmapped fields: {}
+	Unmapped registrations: {}
+	Skipped types: []
+2026-02-01T15:13:27.256+03:00  INFO 84464 --- [graphql-postgres-rest-demo] [main] s.b.a.g.s.GraphQlWebMvcAutoConfiguration : GraphQL endpoint HTTP POST /graphql
+2026-02-01T15:13:28.927+03:00  INFO 84464 --- [graphql-postgres-rest-demo] [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 3 endpoint(s) beneath base path '/actuator'
+2026-02-01T15:13:29.199+03:00  WARN 84464 --- [graphql-postgres-rest-demo] [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'
+2026-02-01T15:13:29.207+03:00  INFO 84464 --- [graphql-postgres-rest-demo] [main] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-02-01T15:13:29.213+03:00  INFO 84464 --- [graphql-postgres-rest-demo] [main] com.zaxxer.hikari.HikariDataSource       : HikariCP-BookDB - Shutdown initiated...
+2026-02-01T15:13:29.224+03:00  INFO 84464 --- [graphql-postgres-rest-demo] [main] com.zaxxer.hikari.HikariDataSource       : HikariCP-BookDB - Shutdown completed.
+2026-02-01T15:13:29.274+03:00  INFO 84464 --- [graphql-postgres-rest-demo] [main] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-02-01T15:13:29.307+03:00 ERROR 84464 --- [graphql-postgres-rest-demo] [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8080 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8080 or configure this application to listen on another port.
+
+2026-02-01T15:13:39.566+03:00  INFO 84068 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-02-01T15:13:39.573+03:00  INFO 84068 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-02-01T15:13:39.581+03:00  INFO 84068 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 6 ms
+2026-02-01T15:13:40.653+03:00 DEBUG 84068 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-4] o.s.g.server.webmvc.GraphQlHttpHandler   : Executing: document='
+            query {
+                books {
+                    id
+                    title
+                    author
+                    publisher
+                    createdAt
+                    updatedAt
+                }
+            }
+        ', id=5f4b4c18-012a-3dc0-995e-f334e5f2f793, Locale=ru_RU
+2026-02-01T15:13:40.883+03:00 DEBUG 84068 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-4] c.e.demo.controller.BookController       : Fetching all books via GraphQL
+2026-02-01T15:13:40.901+03:00  INFO 84068 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-4] com.example.demo.service.BookService     : Fetching all books
+2026-02-01T15:13:41.055+03:00 DEBUG 84068 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        b1_0.id,
+        b1_0.author,
+        b1_0.created_at,
+        b1_0.publisher,
+        b1_0.title,
+        b1_0.updated_at 
+    from
+        books b1_0 
+    order by
+        b1_0.created_at desc
+2026-02-01T15:13:41.127+03:00 DEBUG 84068 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-4] o.s.g.server.webmvc.GraphQlHttpHandler   : Execution complete
+2026-02-01T15:13:41.352+03:00 DEBUG 84068 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-5] o.s.g.server.webmvc.GraphQlHttpHandler   : Executing: document='
+            query {
+                booksCount
+                books {
+                    author
+                    publisher
+                    updatedAt
+                }
+            }
+        ', id=ccf44b6a-f90c-8d7d-c6a4-e4dc3663cec7, Locale=ru_RU
+2026-02-01T15:13:41.361+03:00 DEBUG 84068 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-5] c.e.demo.controller.BookController       : Getting books count via GraphQL
+2026-02-01T15:13:41.446+03:00 DEBUG 84068 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-5] org.hibernate.SQL                        : 
+    select
+        count(*) 
+    from
+        books b1_0
+2026-02-01T15:13:41.457+03:00 DEBUG 84068 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-5] c.e.demo.controller.BookController       : Fetching all books via GraphQL
+2026-02-01T15:13:41.459+03:00  INFO 84068 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-5] com.example.demo.service.BookService     : Fetching all books
+2026-02-01T15:13:41.463+03:00 DEBUG 84068 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-5] org.hibernate.SQL                        : 
+    select
+        b1_0.id,
+        b1_0.author,
+        b1_0.created_at,
+        b1_0.publisher,
+        b1_0.title,
+        b1_0.updated_at 
+    from
+        books b1_0 
+    order by
+        b1_0.created_at desc
+2026-02-01T15:13:41.467+03:00 DEBUG 84068 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-5] o.s.g.server.webmvc.GraphQlHttpHandler   : Execution complete
+2026-02-01T15:14:25.685+03:00  INFO 84068 --- [graphql-postgres-rest-demo] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-02-01T15:14:25.690+03:00  INFO 84068 --- [graphql-postgres-rest-demo] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariCP-BookDB - Shutdown initiated...
+2026-02-01T15:14:25.698+03:00  INFO 84068 --- [graphql-postgres-rest-demo] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariCP-BookDB - Shutdown completed.
+2026-02-01T15:16:17.413+03:00  INFO 32544 --- [graphql-postgres-rest-demo] [main] com.example.demo.DemoApplication         : Starting DemoApplication using Java 21.0.9 with PID 32544 (D:\IIdea\graphql-postgres-rest-demo\target\classes started by Администратор in D:\IIdea\graphql-postgres-rest-demo)
+2026-02-01T15:16:17.416+03:00 DEBUG 32544 --- [graphql-postgres-rest-demo] [main] com.example.demo.DemoApplication         : Running with Spring Boot v3.2.0, Spring v6.1.1
+2026-02-01T15:16:17.418+03:00  INFO 32544 --- [graphql-postgres-rest-demo] [main] com.example.demo.DemoApplication         : No active profile set, falling back to 1 default profile: "default"
+2026-02-01T15:16:19.688+03:00  INFO 32544 --- [graphql-postgres-rest-demo] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-02-01T15:16:19.954+03:00  INFO 32544 --- [graphql-postgres-rest-demo] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 253 ms. Found 1 JPA repository interface.
+2026-02-01T15:16:21.384+03:00  INFO 32544 --- [graphql-postgres-rest-demo] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-02-01T15:16:21.401+03:00  INFO 32544 --- [graphql-postgres-rest-demo] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-02-01T15:16:21.401+03:00  INFO 32544 --- [graphql-postgres-rest-demo] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.16]
+2026-02-01T15:16:21.511+03:00  INFO 32544 --- [graphql-postgres-rest-demo] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-02-01T15:16:21.512+03:00  INFO 32544 --- [graphql-postgres-rest-demo] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 3965 ms
+2026-02-01T15:16:22.032+03:00  INFO 32544 --- [graphql-postgres-rest-demo] [main] com.zaxxer.hikari.HikariDataSource       : HikariCP-BookDB - Starting...
+2026-02-01T15:16:22.354+03:00  INFO 32544 --- [graphql-postgres-rest-demo] [main] com.zaxxer.hikari.pool.HikariPool        : HikariCP-BookDB - Added connection org.postgresql.jdbc.PgConnection@2b1a901d
+2026-02-01T15:16:22.356+03:00  INFO 32544 --- [graphql-postgres-rest-demo] [main] com.zaxxer.hikari.HikariDataSource       : HikariCP-BookDB - Start completed.
+2026-02-01T15:16:22.566+03:00  INFO 32544 --- [graphql-postgres-rest-demo] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-02-01T15:16:22.690+03:00  INFO 32544 --- [graphql-postgres-rest-demo] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.3.1.Final
+2026-02-01T15:16:22.775+03:00  INFO 32544 --- [graphql-postgres-rest-demo] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-02-01T15:16:23.241+03:00  INFO 32544 --- [graphql-postgres-rest-demo] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-02-01T15:16:23.341+03:00  WARN 32544 --- [graphql-postgres-rest-demo] [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-02-01T15:16:24.761+03:00  INFO 32544 --- [graphql-postgres-rest-demo] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-02-01T15:16:24.851+03:00  INFO 32544 --- [graphql-postgres-rest-demo] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-02-01T15:16:25.632+03:00  INFO 32544 --- [graphql-postgres-rest-demo] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-02-01T15:16:26.753+03:00  INFO 32544 --- [graphql-postgres-rest-demo] [main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2026-02-01T15:16:27.477+03:00 DEBUG 32544 --- [graphql-postgres-rest-demo] [main] a.s.AnnotatedControllerExceptionResolver : @GraphQlException methods in ControllerAdvice beans: none
+2026-02-01T15:16:27.859+03:00  INFO 32544 --- [graphql-postgres-rest-demo] [main] efaultSchemaResourceGraphQlSourceBuilder : Loaded 1 resource(s) in the GraphQL schema.
+2026-02-01T15:16:27.860+03:00 DEBUG 32544 --- [graphql-postgres-rest-demo] [main] efaultSchemaResourceGraphQlSourceBuilder : Loaded GraphQL schema resources: (file [D:\IIdea\graphql-postgres-rest-demo\target\classes\graphql\schema.graphqls])
+2026-02-01T15:16:28.250+03:00  INFO 32544 --- [graphql-postgres-rest-demo] [main] o.s.b.a.g.GraphQlAutoConfiguration       : GraphQL schema inspection:
+	Unmapped fields: {}
+	Unmapped registrations: {}
+	Skipped types: []
+2026-02-01T15:16:28.295+03:00  INFO 32544 --- [graphql-postgres-rest-demo] [main] s.b.a.g.s.GraphQlWebMvcAutoConfiguration : GraphQL endpoint HTTP POST /graphql
+2026-02-01T15:16:30.184+03:00  INFO 32544 --- [graphql-postgres-rest-demo] [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 3 endpoint(s) beneath base path '/actuator'
+2026-02-01T15:16:30.427+03:00  INFO 32544 --- [graphql-postgres-rest-demo] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2026-02-01T15:16:30.461+03:00  INFO 32544 --- [graphql-postgres-rest-demo] [main] com.example.demo.DemoApplication         : Started DemoApplication in 14.243 seconds (process running for 16.166)
+2026-02-01T15:16:30.893+03:00  INFO 32544 --- [graphql-postgres-rest-demo] [RMI TCP Connection(2)-172.21.64.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-02-01T15:16:30.894+03:00  INFO 32544 --- [graphql-postgres-rest-demo] [RMI TCP Connection(2)-172.21.64.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-02-01T15:16:30.898+03:00  INFO 32544 --- [graphql-postgres-rest-demo] [RMI TCP Connection(2)-172.21.64.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 4 ms
+2026-02-01T15:16:36.810+03:00 DEBUG 32544 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-4] o.s.g.server.webmvc.GraphQlHttpHandler   : Executing: document='
+            query {
+                books {
+                    id
+                    title
+                    author
+                    publisher
+                    createdAt
+                    updatedAt
+                }
+            }
+        ', id=f2adcb17-0c82-8089-0911-23c5ddb2b29b, Locale=ru_RU
+2026-02-01T15:16:36.981+03:00 DEBUG 32544 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-4] c.e.demo.controller.BookController       : Fetching all books via GraphQL
+2026-02-01T15:16:36.997+03:00  INFO 32544 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-4] com.example.demo.service.BookService     : Fetching all books
+2026-02-01T15:16:37.204+03:00 DEBUG 32544 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        b1_0.id,
+        b1_0.author,
+        b1_0.created_at,
+        b1_0.publisher,
+        b1_0.title,
+        b1_0.updated_at 
+    from
+        books b1_0 
+    order by
+        b1_0.created_at desc
+2026-02-01T15:16:37.240+03:00 DEBUG 32544 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-4] o.s.g.server.webmvc.GraphQlHttpHandler   : Execution complete
+2026-02-01T15:16:37.293+03:00 DEBUG 32544 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-5] o.s.g.server.webmvc.GraphQlHttpHandler   : Executing: document='
+            query {
+                booksCount
+                books {
+                    author
+                }
+            }
+        ', id=cf0595ec-af8d-32b0-3232-cd5853de9ed8, Locale=ru_RU
+2026-02-01T15:16:37.298+03:00 DEBUG 32544 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-5] c.e.demo.controller.BookController       : Getting books count via GraphQL
+2026-02-01T15:16:37.334+03:00 DEBUG 32544 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-5] org.hibernate.SQL                        : 
+    select
+        count(*) 
+    from
+        books b1_0
+2026-02-01T15:16:37.341+03:00 DEBUG 32544 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-5] c.e.demo.controller.BookController       : Fetching all books via GraphQL
+2026-02-01T15:16:37.342+03:00  INFO 32544 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-5] com.example.demo.service.BookService     : Fetching all books
+2026-02-01T15:16:37.345+03:00 DEBUG 32544 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-5] org.hibernate.SQL                        : 
+    select
+        b1_0.id,
+        b1_0.author,
+        b1_0.created_at,
+        b1_0.publisher,
+        b1_0.title,
+        b1_0.updated_at 
+    from
+        books b1_0 
+    order by
+        b1_0.created_at desc
+2026-02-01T15:16:37.348+03:00 DEBUG 32544 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-5] o.s.g.server.webmvc.GraphQlHttpHandler   : Execution complete
+2026-02-01T15:17:58.141+03:00 DEBUG 32544 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-8] o.s.g.server.webmvc.GraphQlHttpHandler   : Executing: document='
+            query {
+                books {
+                    id
+                    title
+                    author
+                    publisher
+                    createdAt
+                    updatedAt
+                }
+            }
+        ', id=d16b857e-e70e-6a60-ec6b-0b7ac30eb906, Locale=ru_RU
+2026-02-01T15:17:58.145+03:00 DEBUG 32544 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-8] c.e.demo.controller.BookController       : Fetching all books via GraphQL
+2026-02-01T15:17:58.146+03:00  INFO 32544 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-8] com.example.demo.service.BookService     : Fetching all books
+2026-02-01T15:17:58.148+03:00 DEBUG 32544 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-8] org.hibernate.SQL                        : 
+    select
+        b1_0.id,
+        b1_0.author,
+        b1_0.created_at,
+        b1_0.publisher,
+        b1_0.title,
+        b1_0.updated_at 
+    from
+        books b1_0 
+    order by
+        b1_0.created_at desc
+2026-02-01T15:17:58.151+03:00 DEBUG 32544 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-8] o.s.g.server.webmvc.GraphQlHttpHandler   : Execution complete
+2026-02-01T15:17:58.163+03:00 DEBUG 32544 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-9] o.s.g.server.webmvc.GraphQlHttpHandler   : Executing: document='
+            query {
+                booksCount
+                books {
+                    author
+                }
+            }
+        ', id=002d5bc0-e818-613d-5d25-331751ad2aaf, Locale=ru_RU
+2026-02-01T15:17:58.166+03:00 DEBUG 32544 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-9] c.e.demo.controller.BookController       : Getting books count via GraphQL
+2026-02-01T15:17:58.168+03:00 DEBUG 32544 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-9] org.hibernate.SQL                        : 
+    select
+        count(*) 
+    from
+        books b1_0
+2026-02-01T15:17:58.171+03:00 DEBUG 32544 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-9] c.e.demo.controller.BookController       : Fetching all books via GraphQL
+2026-02-01T15:17:58.172+03:00  INFO 32544 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-9] com.example.demo.service.BookService     : Fetching all books
+2026-02-01T15:17:58.176+03:00 DEBUG 32544 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-9] org.hibernate.SQL                        : 
+    select
+        b1_0.id,
+        b1_0.author,
+        b1_0.created_at,
+        b1_0.publisher,
+        b1_0.title,
+        b1_0.updated_at 
+    from
+        books b1_0 
+    order by
+        b1_0.created_at desc
+2026-02-01T15:17:58.179+03:00 DEBUG 32544 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-9] o.s.g.server.webmvc.GraphQlHttpHandler   : Execution complete
+2026-02-01T15:18:12.243+03:00 DEBUG 32544 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-2] o.s.g.server.webmvc.GraphQlHttpHandler   : Executing: document='
+            query {
+                books {
+                    id
+                    title
+                    author
+                    publisher
+                    createdAt
+                    updatedAt
+                }
+            }
+        ', id=7e84a6a3-94b5-5289-ed74-d994b1141dee, Locale=ru_RU
+2026-02-01T15:18:12.255+03:00 DEBUG 32544 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-2] c.e.demo.controller.BookController       : Fetching all books via GraphQL
+2026-02-01T15:18:12.256+03:00  INFO 32544 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-2] com.example.demo.service.BookService     : Fetching all books
+2026-02-01T15:18:12.259+03:00 DEBUG 32544 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        b1_0.id,
+        b1_0.author,
+        b1_0.created_at,
+        b1_0.publisher,
+        b1_0.title,
+        b1_0.updated_at 
+    from
+        books b1_0 
+    order by
+        b1_0.created_at desc
+2026-02-01T15:18:12.265+03:00 DEBUG 32544 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-2] o.s.g.server.webmvc.GraphQlHttpHandler   : Execution complete
+2026-02-01T15:18:12.278+03:00 DEBUG 32544 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-4] o.s.g.server.webmvc.GraphQlHttpHandler   : Executing: document='
+            query {
+                booksCount
+                books {
+                    author
+                }
+            }
+        ', id=ec3a87cd-0d9b-9b1f-4c68-536ddad2bb78, Locale=ru_RU
+2026-02-01T15:18:12.285+03:00 DEBUG 32544 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-4] c.e.demo.controller.BookController       : Getting books count via GraphQL
+2026-02-01T15:18:12.287+03:00 DEBUG 32544 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        count(*) 
+    from
+        books b1_0
+2026-02-01T15:18:12.290+03:00 DEBUG 32544 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-4] c.e.demo.controller.BookController       : Fetching all books via GraphQL
+2026-02-01T15:18:12.291+03:00  INFO 32544 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-4] com.example.demo.service.BookService     : Fetching all books
+2026-02-01T15:18:12.298+03:00 DEBUG 32544 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        b1_0.id,
+        b1_0.author,
+        b1_0.created_at,
+        b1_0.publisher,
+        b1_0.title,
+        b1_0.updated_at 
+    from
+        books b1_0 
+    order by
+        b1_0.created_at desc
+2026-02-01T15:18:12.302+03:00 DEBUG 32544 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-4] o.s.g.server.webmvc.GraphQlHttpHandler   : Execution complete
+2026-02-01T15:18:50.070+03:00  INFO 32544 --- [graphql-postgres-rest-demo] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-02-01T15:18:50.075+03:00  INFO 32544 --- [graphql-postgres-rest-demo] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariCP-BookDB - Shutdown initiated...
+2026-02-01T15:18:50.086+03:00  INFO 32544 --- [graphql-postgres-rest-demo] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariCP-BookDB - Shutdown completed.
+2026-02-01T15:22:46.485+03:00  INFO 14560 --- [graphql-postgres-rest-demo] [main] com.example.demo.DemoApplication         : Starting DemoApplication using Java 21.0.9 with PID 14560 (D:\IIdea\graphql-postgres-rest-demo\target\classes started by Администратор in D:\IIdea\graphql-postgres-rest-demo)
+2026-02-01T15:22:46.488+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [main] com.example.demo.DemoApplication         : Running with Spring Boot v3.2.0, Spring v6.1.1
+2026-02-01T15:22:46.490+03:00  INFO 14560 --- [graphql-postgres-rest-demo] [main] com.example.demo.DemoApplication         : No active profile set, falling back to 1 default profile: "default"
+2026-02-01T15:22:48.651+03:00  INFO 14560 --- [graphql-postgres-rest-demo] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-02-01T15:22:48.882+03:00  INFO 14560 --- [graphql-postgres-rest-demo] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 220 ms. Found 1 JPA repository interface.
+2026-02-01T15:22:50.783+03:00  INFO 14560 --- [graphql-postgres-rest-demo] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-02-01T15:22:50.798+03:00  INFO 14560 --- [graphql-postgres-rest-demo] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-02-01T15:22:50.799+03:00  INFO 14560 --- [graphql-postgres-rest-demo] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.16]
+2026-02-01T15:22:50.910+03:00  INFO 14560 --- [graphql-postgres-rest-demo] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-02-01T15:22:50.910+03:00  INFO 14560 --- [graphql-postgres-rest-demo] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 4318 ms
+2026-02-01T15:22:51.411+03:00  INFO 14560 --- [graphql-postgres-rest-demo] [main] com.zaxxer.hikari.HikariDataSource       : HikariCP-BookDB - Starting...
+2026-02-01T15:22:51.710+03:00  INFO 14560 --- [graphql-postgres-rest-demo] [main] com.zaxxer.hikari.pool.HikariPool        : HikariCP-BookDB - Added connection org.postgresql.jdbc.PgConnection@498a4d62
+2026-02-01T15:22:51.713+03:00  INFO 14560 --- [graphql-postgres-rest-demo] [main] com.zaxxer.hikari.HikariDataSource       : HikariCP-BookDB - Start completed.
+2026-02-01T15:22:51.921+03:00  INFO 14560 --- [graphql-postgres-rest-demo] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-02-01T15:22:52.042+03:00  INFO 14560 --- [graphql-postgres-rest-demo] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.3.1.Final
+2026-02-01T15:22:52.112+03:00  INFO 14560 --- [graphql-postgres-rest-demo] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-02-01T15:22:52.556+03:00  INFO 14560 --- [graphql-postgres-rest-demo] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-02-01T15:22:52.640+03:00  WARN 14560 --- [graphql-postgres-rest-demo] [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-02-01T15:22:53.921+03:00  INFO 14560 --- [graphql-postgres-rest-demo] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-02-01T15:22:54.007+03:00  INFO 14560 --- [graphql-postgres-rest-demo] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-02-01T15:22:54.758+03:00  INFO 14560 --- [graphql-postgres-rest-demo] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-02-01T15:22:55.719+03:00  INFO 14560 --- [graphql-postgres-rest-demo] [main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2026-02-01T15:22:56.348+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [main] a.s.AnnotatedControllerExceptionResolver : @GraphQlException methods in ControllerAdvice beans: none
+2026-02-01T15:22:56.653+03:00  INFO 14560 --- [graphql-postgres-rest-demo] [main] efaultSchemaResourceGraphQlSourceBuilder : Loaded 1 resource(s) in the GraphQL schema.
+2026-02-01T15:22:56.654+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [main] efaultSchemaResourceGraphQlSourceBuilder : Loaded GraphQL schema resources: (file [D:\IIdea\graphql-postgres-rest-demo\target\classes\graphql\schema.graphqls])
+2026-02-01T15:22:56.986+03:00  INFO 14560 --- [graphql-postgres-rest-demo] [main] o.s.b.a.g.GraphQlAutoConfiguration       : GraphQL schema inspection:
+	Unmapped fields: {}
+	Unmapped registrations: {}
+	Skipped types: []
+2026-02-01T15:22:57.044+03:00  INFO 14560 --- [graphql-postgres-rest-demo] [main] s.b.a.g.s.GraphQlWebMvcAutoConfiguration : GraphQL endpoint HTTP POST /graphql
+2026-02-01T15:22:58.329+03:00  INFO 14560 --- [graphql-postgres-rest-demo] [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 3 endpoint(s) beneath base path '/actuator'
+2026-02-01T15:22:58.507+03:00  INFO 14560 --- [graphql-postgres-rest-demo] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2026-02-01T15:22:58.527+03:00  INFO 14560 --- [graphql-postgres-rest-demo] [main] com.example.demo.DemoApplication         : Started DemoApplication in 13.126 seconds (process running for 14.798)
+2026-02-01T15:23:04.133+03:00  INFO 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-02-01T15:23:04.133+03:00  INFO 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-02-01T15:23:04.136+03:00  INFO 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
+2026-02-01T15:23:04.845+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-4] o.s.g.server.webmvc.GraphQlHttpHandler   : Executing: document='
+            query {
+                books {
+                    id
+                    title
+                    author
+                    publisher
+                    createdAt
+                    updatedAt
+                }
+            }
+        ', id=78af8c6f-d6a8-52e6-9f37-911631c711dd, Locale=ru_RU
+2026-02-01T15:23:05.001+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-4] c.e.demo.controller.BookController       : Fetching all books via GraphQL
+2026-02-01T15:23:05.016+03:00  INFO 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-4] com.example.demo.service.BookService     : Fetching all books
+2026-02-01T15:23:05.167+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        b1_0.id,
+        b1_0.author,
+        b1_0.created_at,
+        b1_0.publisher,
+        b1_0.title,
+        b1_0.updated_at 
+    from
+        books b1_0 
+    order by
+        b1_0.created_at desc
+2026-02-01T15:23:05.207+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-4] o.s.g.server.webmvc.GraphQlHttpHandler   : Execution complete
+2026-02-01T15:23:05.256+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-5] o.s.g.server.webmvc.GraphQlHttpHandler   : Executing: document='
+            query {
+                booksCount
+                books {
+                    author
+                }
+            }
+        ', id=ed5af80f-9636-357e-7c45-f386878889bc, Locale=ru_RU
+2026-02-01T15:23:05.263+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-5] c.e.demo.controller.BookController       : Getting books count via GraphQL
+2026-02-01T15:23:05.300+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-5] org.hibernate.SQL                        : 
+    select
+        count(*) 
+    from
+        books b1_0
+2026-02-01T15:23:05.309+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-5] c.e.demo.controller.BookController       : Fetching all books via GraphQL
+2026-02-01T15:23:05.309+03:00  INFO 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-5] com.example.demo.service.BookService     : Fetching all books
+2026-02-01T15:23:05.313+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-5] org.hibernate.SQL                        : 
+    select
+        b1_0.id,
+        b1_0.author,
+        b1_0.created_at,
+        b1_0.publisher,
+        b1_0.title,
+        b1_0.updated_at 
+    from
+        books b1_0 
+    order by
+        b1_0.created_at desc
+2026-02-01T15:23:05.316+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-5] o.s.g.server.webmvc.GraphQlHttpHandler   : Execution complete
+2026-02-01T15:23:20.411+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-6] o.s.g.server.webmvc.GraphQlHttpHandler   : Executing: document='
+                mutation AddBook($input: BookInput!) {
+                    addBook(input: $input) {
+                        id
+                        title
+                        author
+                        publisher
+                    }
+                }
+            ', variables={input={title=Название, author=Автор, publisher=12/12/2001}}, id=ba3e2248-51fb-e543-dc92-1cfcf301d06e, Locale=ru_RU
+2026-02-01T15:23:20.555+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-6] c.e.demo.controller.BookController       : Creating new book via GraphQL: Название
+2026-02-01T15:23:20.557+03:00  INFO 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-6] com.example.demo.service.BookService     : Creating new book: Название
+2026-02-01T15:23:20.597+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-6] org.hibernate.SQL                        : 
+    insert 
+    into
+        books
+        (author, created_at, publisher, title, updated_at) 
+    values
+        (?, ?, ?, ?, ?)
+2026-02-01T15:23:20.654+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-6] o.s.g.server.webmvc.GraphQlHttpHandler   : Execution complete
+2026-02-01T15:23:20.674+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-7] o.s.g.server.webmvc.GraphQlHttpHandler   : Executing: document='
+            query {
+                books {
+                    id
+                    title
+                    author
+                    publisher
+                    createdAt
+                    updatedAt
+                }
+            }
+        ', id=81bd398d-9a2d-595a-1865-8a8f98c51e32, Locale=ru_RU
+2026-02-01T15:23:20.680+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-7] c.e.demo.controller.BookController       : Fetching all books via GraphQL
+2026-02-01T15:23:20.680+03:00  INFO 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-7] com.example.demo.service.BookService     : Fetching all books
+2026-02-01T15:23:20.688+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-7] org.hibernate.SQL                        : 
+    select
+        b1_0.id,
+        b1_0.author,
+        b1_0.created_at,
+        b1_0.publisher,
+        b1_0.title,
+        b1_0.updated_at 
+    from
+        books b1_0 
+    order by
+        b1_0.created_at desc
+2026-02-01T15:23:20.713+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-7] o.s.g.server.webmvc.GraphQlHttpHandler   : Execution complete
+2026-02-01T15:23:20.737+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-8] o.s.g.server.webmvc.GraphQlHttpHandler   : Executing: document='
+            query {
+                booksCount
+                books {
+                    author
+                }
+            }
+        ', id=c9557597-f8a8-4a54-e67b-732f1bad5beb, Locale=ru_RU
+2026-02-01T15:23:20.741+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-8] c.e.demo.controller.BookController       : Getting books count via GraphQL
+2026-02-01T15:23:20.743+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-8] org.hibernate.SQL                        : 
+    select
+        count(*) 
+    from
+        books b1_0
+2026-02-01T15:23:20.748+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-8] c.e.demo.controller.BookController       : Fetching all books via GraphQL
+2026-02-01T15:23:20.750+03:00  INFO 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-8] com.example.demo.service.BookService     : Fetching all books
+2026-02-01T15:23:20.752+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-8] org.hibernate.SQL                        : 
+    select
+        b1_0.id,
+        b1_0.author,
+        b1_0.created_at,
+        b1_0.publisher,
+        b1_0.title,
+        b1_0.updated_at 
+    from
+        books b1_0 
+    order by
+        b1_0.created_at desc
+2026-02-01T15:23:20.756+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-8] o.s.g.server.webmvc.GraphQlHttpHandler   : Execution complete
+2026-02-01T15:23:28.894+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-9] o.s.g.server.webmvc.GraphQlHttpHandler   : Executing: document='
+            query GetBook($id: ID!) {
+                bookById(id: $id) {
+                    id
+                    title
+                    author
+                    publisher
+                }
+            }
+        ', variables={id=2}, id=38315e40-0d9f-02d9-a6d5-dd0265e93027, Locale=ru_RU
+2026-02-01T15:23:28.900+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-9] c.e.demo.controller.BookController       : Fetching book by id: 2 via GraphQL
+2026-02-01T15:23:28.901+03:00  INFO 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-9] com.example.demo.service.BookService     : Fetching book with id: 2
+2026-02-01T15:23:28.917+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-9] org.hibernate.SQL                        : 
+    select
+        b1_0.id,
+        b1_0.author,
+        b1_0.created_at,
+        b1_0.publisher,
+        b1_0.title,
+        b1_0.updated_at 
+    from
+        books b1_0 
+    where
+        b1_0.id=?
+2026-02-01T15:23:28.925+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-9] o.s.g.server.webmvc.GraphQlHttpHandler   : Execution complete
+2026-02-01T15:23:53.982+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-10] o.s.g.server.webmvc.GraphQlHttpHandler   : Executing: document='
+                mutation UpdateBook($id: ID!, $input: BookInput!) {
+                    updateBook(id: $id, input: $input) {
+                        id
+                        title
+                        author
+                        publisher
+                    }
+                }
+            ', variables={id=2, input={title=Name Book, author=Author of the Book, publisher=12/12/2002}}, id=01f3e818-f9b6-51c1-fce4-5beda7ca2fec, Locale=ru_RU
+2026-02-01T15:23:53.997+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-10] c.e.demo.controller.BookController       : Updating book id: 2 via GraphQL
+2026-02-01T15:23:53.998+03:00  INFO 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-10] com.example.demo.service.BookService     : Updating book with id: 2
+2026-02-01T15:23:53.999+03:00  INFO 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-10] com.example.demo.service.BookService     : Fetching book with id: 2
+2026-02-01T15:23:53.999+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-10] org.hibernate.SQL                        : 
+    select
+        b1_0.id,
+        b1_0.author,
+        b1_0.created_at,
+        b1_0.publisher,
+        b1_0.title,
+        b1_0.updated_at 
+    from
+        books b1_0 
+    where
+        b1_0.id=?
+2026-02-01T15:23:54.019+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-10] org.hibernate.SQL                        : 
+    update
+        books 
+    set
+        author=?,
+        publisher=?,
+        title=?,
+        updated_at=? 
+    where
+        id=?
+2026-02-01T15:23:54.031+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-10] o.s.g.server.webmvc.GraphQlHttpHandler   : Execution complete
+2026-02-01T15:23:54.043+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-1] o.s.g.server.webmvc.GraphQlHttpHandler   : Executing: document='
+            query {
+                books {
+                    id
+                    title
+                    author
+                    publisher
+                    createdAt
+                    updatedAt
+                }
+            }
+        ', id=9a79a8fd-003f-2575-9e0b-ef869e8409d4, Locale=ru_RU
+2026-02-01T15:23:54.048+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-1] c.e.demo.controller.BookController       : Fetching all books via GraphQL
+2026-02-01T15:23:54.049+03:00  INFO 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-1] com.example.demo.service.BookService     : Fetching all books
+2026-02-01T15:23:54.051+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-1] org.hibernate.SQL                        : 
+    select
+        b1_0.id,
+        b1_0.author,
+        b1_0.created_at,
+        b1_0.publisher,
+        b1_0.title,
+        b1_0.updated_at 
+    from
+        books b1_0 
+    order by
+        b1_0.created_at desc
+2026-02-01T15:23:54.060+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-1] o.s.g.server.webmvc.GraphQlHttpHandler   : Execution complete
+2026-02-01T15:23:54.070+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-2] o.s.g.server.webmvc.GraphQlHttpHandler   : Executing: document='
+            query {
+                booksCount
+                books {
+                    author
+                }
+            }
+        ', id=b287feba-6954-fae4-6e6e-16461873d920, Locale=ru_RU
+2026-02-01T15:23:54.075+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-2] c.e.demo.controller.BookController       : Getting books count via GraphQL
+2026-02-01T15:23:54.077+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        count(*) 
+    from
+        books b1_0
+2026-02-01T15:23:54.081+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-2] c.e.demo.controller.BookController       : Fetching all books via GraphQL
+2026-02-01T15:23:54.081+03:00  INFO 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-2] com.example.demo.service.BookService     : Fetching all books
+2026-02-01T15:23:54.083+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        b1_0.id,
+        b1_0.author,
+        b1_0.created_at,
+        b1_0.publisher,
+        b1_0.title,
+        b1_0.updated_at 
+    from
+        books b1_0 
+    order by
+        b1_0.created_at desc
+2026-02-01T15:23:54.091+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-2] o.s.g.server.webmvc.GraphQlHttpHandler   : Execution complete
+2026-02-01T15:24:45.002+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-4] o.s.g.server.webmvc.GraphQlHttpHandler   : Executing: document='
+                mutation AddBook($input: BookInput!) {
+                    addBook(input: $input) {
+                        id
+                        title
+                        author
+                        publisher
+                    }
+                }
+            ', variables={input={title=Adfgdfg, author=sdffdsf, publisher=12/11/2001}}, id=6288f978-a925-81ad-ca76-ee8ab6a230d9, Locale=ru_RU
+2026-02-01T15:24:45.007+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-4] c.e.demo.controller.BookController       : Creating new book via GraphQL: Adfgdfg
+2026-02-01T15:24:45.009+03:00  INFO 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-4] com.example.demo.service.BookService     : Creating new book: Adfgdfg
+2026-02-01T15:24:45.010+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-4] org.hibernate.SQL                        : 
+    insert 
+    into
+        books
+        (author, created_at, publisher, title, updated_at) 
+    values
+        (?, ?, ?, ?, ?)
+2026-02-01T15:24:45.018+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-4] o.s.g.server.webmvc.GraphQlHttpHandler   : Execution complete
+2026-02-01T15:24:45.027+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-5] o.s.g.server.webmvc.GraphQlHttpHandler   : Executing: document='
+            query {
+                books {
+                    id
+                    title
+                    author
+                    publisher
+                    createdAt
+                    updatedAt
+                }
+            }
+        ', id=a2e2cd15-c1b2-2f25-2395-b653f2a14a8a, Locale=ru_RU
+2026-02-01T15:24:45.034+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-5] c.e.demo.controller.BookController       : Fetching all books via GraphQL
+2026-02-01T15:24:45.034+03:00  INFO 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-5] com.example.demo.service.BookService     : Fetching all books
+2026-02-01T15:24:45.036+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-5] org.hibernate.SQL                        : 
+    select
+        b1_0.id,
+        b1_0.author,
+        b1_0.created_at,
+        b1_0.publisher,
+        b1_0.title,
+        b1_0.updated_at 
+    from
+        books b1_0 
+    order by
+        b1_0.created_at desc
+2026-02-01T15:24:45.042+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-5] o.s.g.server.webmvc.GraphQlHttpHandler   : Execution complete
+2026-02-01T15:24:45.054+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-6] o.s.g.server.webmvc.GraphQlHttpHandler   : Executing: document='
+            query {
+                booksCount
+                books {
+                    author
+                }
+            }
+        ', id=fe8fcc71-e3af-9545-cc18-581a63decf8f, Locale=ru_RU
+2026-02-01T15:24:45.056+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-6] c.e.demo.controller.BookController       : Getting books count via GraphQL
+2026-02-01T15:24:45.057+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-6] org.hibernate.SQL                        : 
+    select
+        count(*) 
+    from
+        books b1_0
+2026-02-01T15:24:45.059+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-6] c.e.demo.controller.BookController       : Fetching all books via GraphQL
+2026-02-01T15:24:45.060+03:00  INFO 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-6] com.example.demo.service.BookService     : Fetching all books
+2026-02-01T15:24:45.062+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-6] org.hibernate.SQL                        : 
+    select
+        b1_0.id,
+        b1_0.author,
+        b1_0.created_at,
+        b1_0.publisher,
+        b1_0.title,
+        b1_0.updated_at 
+    from
+        books b1_0 
+    order by
+        b1_0.created_at desc
+2026-02-01T15:24:45.068+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-6] o.s.g.server.webmvc.GraphQlHttpHandler   : Execution complete
+2026-02-01T15:24:58.144+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-7] o.s.g.server.webmvc.GraphQlHttpHandler   : Executing: document='
+            query SearchBooks($title: String!) {
+                searchBooks(title: $title) {
+                    id
+                    title
+                    author
+                    publisher
+                    createdAt
+                    updatedAt
+                }
+            }
+        ', variables={title=Na}, id=88ea9f8f-5b6e-397b-1431-e2383f120a9c, Locale=ru_RU
+2026-02-01T15:24:58.148+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-7] c.e.demo.controller.BookController       : Searching books by title: Na via GraphQL
+2026-02-01T15:24:58.151+03:00  INFO 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-7] com.example.demo.service.BookService     : Searching books with title containing: Na
+2026-02-01T15:24:58.187+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-7] org.hibernate.SQL                        : 
+    select
+        b1_0.id,
+        b1_0.author,
+        b1_0.created_at,
+        b1_0.publisher,
+        b1_0.title,
+        b1_0.updated_at 
+    from
+        books b1_0 
+    where
+        upper(b1_0.title) like upper(?) escape '\'
+2026-02-01T15:24:58.195+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-7] o.s.g.server.webmvc.GraphQlHttpHandler   : Execution complete
+2026-02-01T15:25:00.014+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-8] o.s.g.server.webmvc.GraphQlHttpHandler   : Executing: document='
+            query {
+                books {
+                    id
+                    title
+                    author
+                    publisher
+                    createdAt
+                    updatedAt
+                }
+            }
+        ', id=10e6b21a-acef-df70-966b-9c152286b366, Locale=ru_RU
+2026-02-01T15:25:00.023+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-8] c.e.demo.controller.BookController       : Fetching all books via GraphQL
+2026-02-01T15:25:00.025+03:00  INFO 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-8] com.example.demo.service.BookService     : Fetching all books
+2026-02-01T15:25:00.027+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-8] org.hibernate.SQL                        : 
+    select
+        b1_0.id,
+        b1_0.author,
+        b1_0.created_at,
+        b1_0.publisher,
+        b1_0.title,
+        b1_0.updated_at 
+    from
+        books b1_0 
+    order by
+        b1_0.created_at desc
+2026-02-01T15:25:00.035+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-8] o.s.g.server.webmvc.GraphQlHttpHandler   : Execution complete
+2026-02-01T15:25:00.051+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-9] o.s.g.server.webmvc.GraphQlHttpHandler   : Executing: document='
+            query {
+                booksCount
+                books {
+                    author
+                }
+            }
+        ', id=922836a3-f986-a054-ce43-92af0d2bd29b, Locale=ru_RU
+2026-02-01T15:25:00.060+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-9] c.e.demo.controller.BookController       : Getting books count via GraphQL
+2026-02-01T15:25:00.062+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-9] org.hibernate.SQL                        : 
+    select
+        count(*) 
+    from
+        books b1_0
+2026-02-01T15:25:00.066+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-9] c.e.demo.controller.BookController       : Fetching all books via GraphQL
+2026-02-01T15:25:00.067+03:00  INFO 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-9] com.example.demo.service.BookService     : Fetching all books
+2026-02-01T15:25:00.069+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-9] org.hibernate.SQL                        : 
+    select
+        b1_0.id,
+        b1_0.author,
+        b1_0.created_at,
+        b1_0.publisher,
+        b1_0.title,
+        b1_0.updated_at 
+    from
+        books b1_0 
+    order by
+        b1_0.created_at desc
+2026-02-01T15:25:00.075+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-9] o.s.g.server.webmvc.GraphQlHttpHandler   : Execution complete
+2026-02-01T15:25:07.414+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-10] o.s.g.server.webmvc.GraphQlHttpHandler   : Executing: document='
+            query {
+                books {
+                    id
+                    title
+                    author
+                    publisher
+                    createdAt
+                    updatedAt
+                }
+            }
+        ', id=efb5799e-a7ac-46f0-f097-8f37b0d09b5b, Locale=ru_RU
+2026-02-01T15:25:07.418+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-10] c.e.demo.controller.BookController       : Fetching all books via GraphQL
+2026-02-01T15:25:07.420+03:00  INFO 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-10] com.example.demo.service.BookService     : Fetching all books
+2026-02-01T15:25:07.423+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-10] org.hibernate.SQL                        : 
+    select
+        b1_0.id,
+        b1_0.author,
+        b1_0.created_at,
+        b1_0.publisher,
+        b1_0.title,
+        b1_0.updated_at 
+    from
+        books b1_0 
+    order by
+        b1_0.created_at desc
+2026-02-01T15:25:07.429+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-10] o.s.g.server.webmvc.GraphQlHttpHandler   : Execution complete
+2026-02-01T15:25:07.440+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-1] o.s.g.server.webmvc.GraphQlHttpHandler   : Executing: document='
+            query {
+                booksCount
+                books {
+                    author
+                }
+            }
+        ', id=e02289e2-3fe8-8a31-f416-af88ebfb7058, Locale=ru_RU
+2026-02-01T15:25:07.444+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-1] c.e.demo.controller.BookController       : Getting books count via GraphQL
+2026-02-01T15:25:07.448+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-1] org.hibernate.SQL                        : 
+    select
+        count(*) 
+    from
+        books b1_0
+2026-02-01T15:25:07.454+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-1] c.e.demo.controller.BookController       : Fetching all books via GraphQL
+2026-02-01T15:25:07.455+03:00  INFO 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-1] com.example.demo.service.BookService     : Fetching all books
+2026-02-01T15:25:07.457+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-1] org.hibernate.SQL                        : 
+    select
+        b1_0.id,
+        b1_0.author,
+        b1_0.created_at,
+        b1_0.publisher,
+        b1_0.title,
+        b1_0.updated_at 
+    from
+        books b1_0 
+    order by
+        b1_0.created_at desc
+2026-02-01T15:25:07.463+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-1] o.s.g.server.webmvc.GraphQlHttpHandler   : Execution complete
+2026-02-01T15:25:12.023+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-2] o.s.g.server.webmvc.GraphQlHttpHandler   : Executing: document='
+            query {
+                books {
+                    id
+                    title
+                    author
+                    publisher
+                    createdAt
+                    updatedAt
+                }
+            }
+        ', id=27836300-98f4-d583-f5fb-183c9221d024, Locale=ru_RU
+2026-02-01T15:25:12.030+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-2] c.e.demo.controller.BookController       : Fetching all books via GraphQL
+2026-02-01T15:25:12.032+03:00  INFO 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-2] com.example.demo.service.BookService     : Fetching all books
+2026-02-01T15:25:12.034+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        b1_0.id,
+        b1_0.author,
+        b1_0.created_at,
+        b1_0.publisher,
+        b1_0.title,
+        b1_0.updated_at 
+    from
+        books b1_0 
+    order by
+        b1_0.created_at desc
+2026-02-01T15:25:12.044+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-2] o.s.g.server.webmvc.GraphQlHttpHandler   : Execution complete
+2026-02-01T15:25:12.056+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-3] o.s.g.server.webmvc.GraphQlHttpHandler   : Executing: document='
+            query {
+                booksCount
+                books {
+                    author
+                }
+            }
+        ', id=06870720-3482-cf22-bbaa-a1fe7049fbd8, Locale=ru_RU
+2026-02-01T15:25:12.059+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-3] c.e.demo.controller.BookController       : Getting books count via GraphQL
+2026-02-01T15:25:12.062+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-3] org.hibernate.SQL                        : 
+    select
+        count(*) 
+    from
+        books b1_0
+2026-02-01T15:25:12.067+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-3] c.e.demo.controller.BookController       : Fetching all books via GraphQL
+2026-02-01T15:25:12.067+03:00  INFO 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-3] com.example.demo.service.BookService     : Fetching all books
+2026-02-01T15:25:12.069+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-3] org.hibernate.SQL                        : 
+    select
+        b1_0.id,
+        b1_0.author,
+        b1_0.created_at,
+        b1_0.publisher,
+        b1_0.title,
+        b1_0.updated_at 
+    from
+        books b1_0 
+    order by
+        b1_0.created_at desc
+2026-02-01T15:25:12.077+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-3] o.s.g.server.webmvc.GraphQlHttpHandler   : Execution complete
+2026-02-01T15:25:27.872+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-4] o.s.g.server.webmvc.GraphQlHttpHandler   : Executing: document='
+            mutation DeleteBook($id: ID!) {
+                deleteBook(id: $id)
+            }
+        ', variables={id=3}, id=f57b1f18-ea3b-2c75-9601-ddd18e5d266b, Locale=ru_RU
+2026-02-01T15:25:27.880+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-4] c.e.demo.controller.BookController       : Deleting book id: 3 via GraphQL
+2026-02-01T15:25:27.882+03:00  INFO 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-4] com.example.demo.service.BookService     : Deleting book with id: 3
+2026-02-01T15:25:27.901+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        count(*) 
+    from
+        books b1_0 
+    where
+        b1_0.id=?
+2026-02-01T15:25:27.905+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        b1_0.id,
+        b1_0.author,
+        b1_0.created_at,
+        b1_0.publisher,
+        b1_0.title,
+        b1_0.updated_at 
+    from
+        books b1_0 
+    where
+        b1_0.id=?
+2026-02-01T15:25:27.920+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-4] org.hibernate.SQL                        : 
+    delete 
+    from
+        books 
+    where
+        id=?
+2026-02-01T15:25:27.925+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-4] o.s.g.server.webmvc.GraphQlHttpHandler   : Execution complete
+2026-02-01T15:25:28.250+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-5] o.s.g.server.webmvc.GraphQlHttpHandler   : Executing: document='
+            query {
+                books {
+                    id
+                    title
+                    author
+                    publisher
+                    createdAt
+                    updatedAt
+                }
+            }
+        ', id=8e24a09f-c5f1-4490-6d74-3426b5a9a4f5, Locale=ru_RU
+2026-02-01T15:25:28.252+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-5] c.e.demo.controller.BookController       : Fetching all books via GraphQL
+2026-02-01T15:25:28.253+03:00  INFO 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-5] com.example.demo.service.BookService     : Fetching all books
+2026-02-01T15:25:28.255+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-5] org.hibernate.SQL                        : 
+    select
+        b1_0.id,
+        b1_0.author,
+        b1_0.created_at,
+        b1_0.publisher,
+        b1_0.title,
+        b1_0.updated_at 
+    from
+        books b1_0 
+    order by
+        b1_0.created_at desc
+2026-02-01T15:25:28.259+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-5] o.s.g.server.webmvc.GraphQlHttpHandler   : Execution complete
+2026-02-01T15:25:28.271+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-6] o.s.g.server.webmvc.GraphQlHttpHandler   : Executing: document='
+            query {
+                booksCount
+                books {
+                    author
+                }
+            }
+        ', id=cb9b6815-2c0e-3b69-1545-dbbd304ff088, Locale=ru_RU
+2026-02-01T15:25:28.273+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-6] c.e.demo.controller.BookController       : Getting books count via GraphQL
+2026-02-01T15:25:28.275+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-6] org.hibernate.SQL                        : 
+    select
+        count(*) 
+    from
+        books b1_0
+2026-02-01T15:25:28.277+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-6] c.e.demo.controller.BookController       : Fetching all books via GraphQL
+2026-02-01T15:25:28.278+03:00  INFO 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-6] com.example.demo.service.BookService     : Fetching all books
+2026-02-01T15:25:28.280+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-6] org.hibernate.SQL                        : 
+    select
+        b1_0.id,
+        b1_0.author,
+        b1_0.created_at,
+        b1_0.publisher,
+        b1_0.title,
+        b1_0.updated_at 
+    from
+        books b1_0 
+    order by
+        b1_0.created_at desc
+2026-02-01T15:25:28.285+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-6] o.s.g.server.webmvc.GraphQlHttpHandler   : Execution complete
+2026-02-01T15:25:33.302+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-10] o.s.g.server.webmvc.GraphQlHttpHandler   : Executing: document='
+            query {
+                books {
+                    id
+                    title
+                    author
+                    publisher
+                    createdAt
+                    updatedAt
+                }
+            }
+        ', id=74b72050-42b9-0c7e-e76c-5d1ad5b0cee3, Locale=ru_RU
+2026-02-01T15:25:33.307+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-10] c.e.demo.controller.BookController       : Fetching all books via GraphQL
+2026-02-01T15:25:33.309+03:00  INFO 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-10] com.example.demo.service.BookService     : Fetching all books
+2026-02-01T15:25:33.312+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-10] org.hibernate.SQL                        : 
+    select
+        b1_0.id,
+        b1_0.author,
+        b1_0.created_at,
+        b1_0.publisher,
+        b1_0.title,
+        b1_0.updated_at 
+    from
+        books b1_0 
+    order by
+        b1_0.created_at desc
+2026-02-01T15:25:33.323+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-10] o.s.g.server.webmvc.GraphQlHttpHandler   : Execution complete
+2026-02-01T15:25:33.336+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-1] o.s.g.server.webmvc.GraphQlHttpHandler   : Executing: document='
+            query {
+                booksCount
+                books {
+                    author
+                }
+            }
+        ', id=d29d76ca-8f4e-3d1a-8c0b-3bbd461b819e, Locale=ru_RU
+2026-02-01T15:25:33.339+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-1] c.e.demo.controller.BookController       : Getting books count via GraphQL
+2026-02-01T15:25:33.340+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-1] org.hibernate.SQL                        : 
+    select
+        count(*) 
+    from
+        books b1_0
+2026-02-01T15:25:33.343+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-1] c.e.demo.controller.BookController       : Fetching all books via GraphQL
+2026-02-01T15:25:33.344+03:00  INFO 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-1] com.example.demo.service.BookService     : Fetching all books
+2026-02-01T15:25:33.348+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-1] org.hibernate.SQL                        : 
+    select
+        b1_0.id,
+        b1_0.author,
+        b1_0.created_at,
+        b1_0.publisher,
+        b1_0.title,
+        b1_0.updated_at 
+    from
+        books b1_0 
+    order by
+        b1_0.created_at desc
+2026-02-01T15:25:33.353+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-1] o.s.g.server.webmvc.GraphQlHttpHandler   : Execution complete
+2026-02-01T15:25:39.815+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-2] o.s.g.server.webmvc.GraphQlHttpHandler   : Executing: document='
+            query {
+                books {
+                    id
+                    title
+                    author
+                    publisher
+                    createdAt
+                    updatedAt
+                }
+            }
+        ', id=a882b3d4-df08-dddd-1a6f-cbb8742d219f, Locale=ru_RU
+2026-02-01T15:25:39.818+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-2] c.e.demo.controller.BookController       : Fetching all books via GraphQL
+2026-02-01T15:25:39.819+03:00  INFO 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-2] com.example.demo.service.BookService     : Fetching all books
+2026-02-01T15:25:39.821+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        b1_0.id,
+        b1_0.author,
+        b1_0.created_at,
+        b1_0.publisher,
+        b1_0.title,
+        b1_0.updated_at 
+    from
+        books b1_0 
+    order by
+        b1_0.created_at desc
+2026-02-01T15:25:39.825+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-2] o.s.g.server.webmvc.GraphQlHttpHandler   : Execution complete
+2026-02-01T15:25:39.836+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-3] o.s.g.server.webmvc.GraphQlHttpHandler   : Executing: document='
+            query {
+                booksCount
+                books {
+                    author
+                }
+            }
+        ', id=63bfaaf7-6a08-0515-6409-c03e64c53c71, Locale=ru_RU
+2026-02-01T15:25:39.839+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-3] c.e.demo.controller.BookController       : Getting books count via GraphQL
+2026-02-01T15:25:39.840+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-3] org.hibernate.SQL                        : 
+    select
+        count(*) 
+    from
+        books b1_0
+2026-02-01T15:25:39.843+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-3] c.e.demo.controller.BookController       : Fetching all books via GraphQL
+2026-02-01T15:25:39.844+03:00  INFO 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-3] com.example.demo.service.BookService     : Fetching all books
+2026-02-01T15:25:39.846+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-3] org.hibernate.SQL                        : 
+    select
+        b1_0.id,
+        b1_0.author,
+        b1_0.created_at,
+        b1_0.publisher,
+        b1_0.title,
+        b1_0.updated_at 
+    from
+        books b1_0 
+    order by
+        b1_0.created_at desc
+2026-02-01T15:25:39.850+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-3] o.s.g.server.webmvc.GraphQlHttpHandler   : Execution complete
+2026-02-01T15:25:41.983+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-4] o.s.g.server.webmvc.GraphQlHttpHandler   : Executing: document='
+            query {
+                books {
+                    id
+                    title
+                    author
+                    publisher
+                    createdAt
+                    updatedAt
+                }
+            }
+        ', id=90ba8595-3517-8b57-8de6-50e63575bdc1, Locale=ru_RU
+2026-02-01T15:25:41.989+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-4] c.e.demo.controller.BookController       : Fetching all books via GraphQL
+2026-02-01T15:25:41.990+03:00  INFO 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-4] com.example.demo.service.BookService     : Fetching all books
+2026-02-01T15:25:41.993+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        b1_0.id,
+        b1_0.author,
+        b1_0.created_at,
+        b1_0.publisher,
+        b1_0.title,
+        b1_0.updated_at 
+    from
+        books b1_0 
+    order by
+        b1_0.created_at desc
+2026-02-01T15:25:41.997+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-4] o.s.g.server.webmvc.GraphQlHttpHandler   : Execution complete
+2026-02-01T15:25:42.009+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-5] o.s.g.server.webmvc.GraphQlHttpHandler   : Executing: document='
+            query {
+                booksCount
+                books {
+                    author
+                }
+            }
+        ', id=8d5222f6-b7cf-0217-de78-a10261c46376, Locale=ru_RU
+2026-02-01T15:25:42.011+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-5] c.e.demo.controller.BookController       : Getting books count via GraphQL
+2026-02-01T15:25:42.012+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-5] org.hibernate.SQL                        : 
+    select
+        count(*) 
+    from
+        books b1_0
+2026-02-01T15:25:42.015+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-5] c.e.demo.controller.BookController       : Fetching all books via GraphQL
+2026-02-01T15:25:42.015+03:00  INFO 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-5] com.example.demo.service.BookService     : Fetching all books
+2026-02-01T15:25:42.019+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-5] org.hibernate.SQL                        : 
+    select
+        b1_0.id,
+        b1_0.author,
+        b1_0.created_at,
+        b1_0.publisher,
+        b1_0.title,
+        b1_0.updated_at 
+    from
+        books b1_0 
+    order by
+        b1_0.created_at desc
+2026-02-01T15:25:42.024+03:00 DEBUG 14560 --- [graphql-postgres-rest-demo] [http-nio-8080-exec-5] o.s.g.server.webmvc.GraphQlHttpHandler   : Execution complete
+2026-02-01T15:26:41.122+03:00  INFO 14560 --- [graphql-postgres-rest-demo] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-02-01T15:26:41.127+03:00  INFO 14560 --- [graphql-postgres-rest-demo] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariCP-BookDB - Shutdown initiated...
+2026-02-01T15:26:41.138+03:00  INFO 14560 --- [graphql-postgres-rest-demo] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariCP-BookDB - Shutdown completed.
